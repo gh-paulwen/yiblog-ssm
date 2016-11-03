@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.paul.yiblog_ssm.mapper.ReplyMapper">
+  <insert id="insert" parameterType="Reply">
+    insert into reply (comment,fromUser,toUser,content,replytime) 
+    values (#{comment},#{fromUser},#{toUser},#{content},now())
+  </insert>
+  
+  <select id="select" parameterType="long" resultType="Reply">
+    select * from reply where id=#{id}
+  </select>
+  
+  <select id="getAll" resultType="Reply">
+    select * from reply order by replytime desc
+  </select>
+  
+  <select id="getNew" resultType="Reply">
+    select * from reply where newreply=1 order by replytime desc
+  </select>
+  
+  <select id="getByComment" resultType="Reply" parameterType="long">
+    select * from reply where comment = #{id}
+  </select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.paul.yiblog_ssm.mapper.CommentMapper">
+  
+  <insert id="insert" parameterType="Comment">
+    insert into comment(passage,fromUser,toUser,replyCount,content,commenttime) values (#{passage},#{fromUser},#{toUser},#{replyCount},#{content},now())
+  </insert>
+  
+  <select id="select" resultType="Comment" parameterType="long">
+    select * from comment where id=#{id}
+  </select>
+  
+  <select id="getAll" resultType="Comment">
+    select * from comment order by commenttime desc
+  </select>
+  
+  <select id="getNew" resultType="Comment">
+    select * from comment where newComment=1 order by commenttime desc
+  </select>
+  
+  <select id="getByPassage" resultType="Comment" parameterType="long">
+    select * from comment where passage = #{id} order by commenttime desc
+  </select>
+  
+</mapper>
+
+

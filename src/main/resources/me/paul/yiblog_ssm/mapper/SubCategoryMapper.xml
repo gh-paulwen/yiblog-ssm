@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.paul.yiblog_ssm.mapper.SubCategoryMapper">
+
+  <resultMap type="Category" id="categoryMap">
+    <id column="category.id" property="id"/>
+    <result column="category.name" property="name"/>
+    <result column="category.passageCount" property="passageCount"/>
+  </resultMap>
+
+  <resultMap type="SubCategory" id="subCategoryMap">
+    <id column="subCategory.id" property="id"/>
+    <result column="subCategory.name" property="name"/>
+    <result column="subCategory.passageCount" property="passageCount"></result>
+    <result column="subCategory.logopath" property="logopath"/>
+    <association property="category" javaType="Category" resultMap="categoryMap"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="SubCategory">
+    insert into subCategory (category,name,passageCount,logopath)
+    values (#{category.id},#{name},#{logopath})
+  </insert>
+  
+  <update id="update" parameterType="subCategory">
+    update subCategory set name=#{name},passageCount=#{passageCount},logopath=#{logopath} where id=#{id}
+  </update>
+  
+  <sql id="baseSelect">
+    select 
+      subCategory.id as `subCategory.id`,
+      subCategory.name as `subCategory.name`,
+      subCategory.passageCount as `subCategory.passageCount`,
+      subCategory.logopath as `subCategory.logopath`,
+      category.id as `category.id`,
+      category.name as `category.name`,
+      category.passageCount as `category.passageCount`
+    from subCategory,category where subCategory.category=category.id
+  </sql>
+  
+  <select id="getByCategory" resultMap="subCategoryMap" parameterType="long">
+    <include refid="baseSelect"/>
+    and category.id=#{categoryid};
+  </select>
+  
+  <select id="getById" resultMap="subCategoryMap" parameterType="long">
+     <include refid="baseSelect"/>
+     and subCategory.id=#{id};
+  </select>
+  
+  <select id="getAll" resultMap="subCategoryMap">
+    <include refid="baseSelect"/>
+  </select>
+</mapper>

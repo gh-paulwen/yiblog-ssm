@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.paul.yiblog_ssm.mapper.PowerMapper">
+
+  <resultMap type="Power" id="powerMap">
+    <id column="power.id" property="id"/>
+    <result column="power.name" property="name"/>
+  </resultMap>
+
+  <select id="select" parameterType="long" resultMap="powerMap">
+    select 
+      power.id as `power.id`,
+      power.name as `power.name`
+    from power.id=#{id}
+  </select>
+</mapper>

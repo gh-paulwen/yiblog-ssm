@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.paul.yiblog_ssm.mapper.LinkMapper">
+  <insert id="insert" parameterType="Link">
+    insert into link (name,email,url,introduction) values (#{name},#{email},#{url},#{introduction})
+  </insert>
+  
+  <update id="update" parameterType="Link">
+    update link set pass=#{pass} where id=#{id}
+  </update>
+  
+  <select id="getPass" resultType="Link">
+    select * from link where pass=1
+  </select>
+  
+  <select id="getAll" resultType="Link">
+    select * from link 
+  </select>
+
+
+</mapper>

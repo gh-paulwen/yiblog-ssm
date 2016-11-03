@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.paul.yiblog_ssm.mapper.PassageMapper">
+
+  <resultMap type="Power" id="powerMap">
+    <id column="power.id" property="id"/>
+    <result column="power.name" property="name"/>
+  </resultMap>
+
+  <resultMap type="User" id="userMap">
+    <id column="id" property="id"/>
+    <result column="user.name" property="name" javaType="java.lang.String"/>
+    <result column="user.email" property="email" javaType="java.lang.String"/>
+    <result column="user.phonenumber" property="phonenumber" javaType="java.lang.String"/>
+    <result column="user.sex" property="sex" javaType="int"/>
+    <result column="user.birthDate" property="birthDate" javaType="java.util.Date"/>
+    <result column="user.registerDate" property="registerDate" javaType="java.util.Date"/>
+    <result column="user.lastLoginDate" property="lastLoginDate" javaType="java.util.Date"/>
+    <result column="user.password" property="password"/>
+    <association property="power" javaType="Power" resultMap="powerMap"/>
+  </resultMap>
+  
+  <resultMap type="Category" id="categoryMap">
+    <id column="category.id" property="id"/>
+    <result column="category.name" property="name"/>
+    <result column="category.passageCount" property="passageCount"></result>
+  </resultMap>
+  
+  <resultMap type="SubCategory" id="subCategoryMap">
+    <id column="subCategory.id" property="id"/>
+    <result column="subCategory.name" property="name"/>
+    <result column="subCategory.passageCount" property="passageCount"/>
+    <result column="subCategory.logopath" property="logopath"/>
+  </resultMap>
+
+  <resultMap type="Passage" id="passageMap">
+    <id column="passage.id" property="id"/>
+    <result column="passage.title" property="title"/>
+    <result column="passage.readtime" property="readtime"/>
+    <result column="passage.writetime" property="writetime" javaType="java.util.Date"/>
+    <result column="passage.content" property="content"/>
+    <result column="passage.outline" property="outline"/>
+    <association property="author" javaType="User" resultMap="userMap"/>
+    <association property="category" javaType="Category" resultMap="categoryMap"/>
+    <association property="subCategory" javaType="SubCategory" resultMap="subCategoryMap"/>
+  </resultMap>
+  
+  <sql id="baseSelect">
+    select 
+      passage.id as `passage.id`,
+      passage.title as `passage.title`,
+      passage.readtime as `passage.readtime`,
+      passage.writetime as `passage.writetime`,
+      passage.content as `passage.content`,
+      passage.outline as `passage.outline`,
+      user.id as `user.id`,
+      user.name as `user.name`,
+      user.phonenumber as `user.phonenumber`,
+      user.sex as `user.sex`,
+      user.birthDate as `user.birthDate`,
+      user.registerDate `user.registerDate`,
+      user.lastLoginDate as `user.lastLoginDate`,
+      user.password as `user.password`,
+      power.id as `power.id`,
+      power.name as `power.name`,
+      category.id as `category.id`,
+      category.name as `category.name`,
+      category.passageCount as `category.passageCount`,
+      subCategory.id as `subCategory.id`,
+      subCategory.name as `subCategory.name`,
+      subCategory.passageCount as `subCategory.passageCount`,
+      subCategory.logopath as `subCategory.logopath`
+      from passage,user,category,subCategory,power
+      where passage.author=user.id and
+      passage.category=category.id and
+      user.powerid=power.id and
+      passage.subCategory=subCategory.id
+  </sql>
+  
+  <select id="getById" parameterType="long" resultMap="passageMap">
+  	  <include refid="baseSelect"/>
+      and passage.id = #{id}
+  </select>
+  
+  <select id="page" resultMap="passageMap">
+      <include refid="baseSelect"/>
+      order by passage.writetime desc limit #{0} , #{1}
+  </select>
+  
+  <select id="categoryPage" resultMap="passageMap">
+     <include refid="baseSelect"/>
+     and passage.subCategory=#{0} order by passage.writetime desc limit #{1},#{2}
+  </select>
+  
+  <select id="passageCount" resultType="int">
+    select sum(passageCount) from subCategory
+  </select>
+  
+  <select id="categoryPassageCount" resultType="int" parameterType="long">
+    select passageCount from subCategory where id=#{id}
+  </select>
+  
+  <select id="search" resultMap="passageMap">
+    <include refid="baseSelect"/>
+    and (passage.title like #{0} or passage.content like #{0}) 
+  </select>
+  
+  <select id="getBasic" resultType="Passage">
+    select id,title from passage
+  </select>
+  
+  <insert id="insert" parameterType="Passage">
+    insert into passage (title,author,outline,category,subCategory,content,writetime)
+    values (#{title},#{author.id},#{outline},#{category.id},#{subCategory.id},#{content},now())
+  </insert>
+  
+  <update id="update" parameterType="Passage">
+    update passage set title=#{title},outline=#{outline},content=#{content},subCategory=#{subCategory.id},category=#{category.id} where id=#{id}
+  </update>
+  
+</mapper>
