@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </resultMap>
 
   <insert id="insert" parameterType="SubCategory">
-    insert into subCategory (category,name,passageCount,logopath)
+    insert into subCategory (category,name,logopath)
     values (#{category.id},#{name},#{logopath})
   </insert>
   
