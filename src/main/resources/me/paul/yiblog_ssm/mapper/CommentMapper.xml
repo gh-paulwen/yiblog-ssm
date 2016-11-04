@@ -9,6 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     insert into comment(passage,fromUser,toUser,replyCount,content,commenttime) values (#{passage},#{fromUser},#{toUser},#{replyCount},#{content},now())
   </insert>
   
+  <update id="update" parameterType="Comment">
+    update comment set newComment=#{newComment} where id=#{id}
+  </update>
+  
   <select id="select" resultType="Comment" parameterType="long">
     select * from comment where id=#{id}
   </select>
@@ -23,6 +27,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <select id="getByPassage" resultType="Comment" parameterType="long">
     select * from comment where passage = #{id} order by commenttime desc
+  </select>
+  
+  <select id="getById" resultType="Comment" parameterType="long">
+    select * from comment where id=#{id}
   </select>
   
 </mapper>

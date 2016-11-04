@@ -96,7 +96,7 @@ public class Comment {
 	
 	@Override 
 	public int hashCode(){
-		return Long.hashCode(id);
+		return (int)id;
 	}
 
 }

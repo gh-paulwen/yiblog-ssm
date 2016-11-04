@@ -140,6 +140,7 @@
 	</bean>
 	<bean id="replyController" class="me.paul.yiblog_ssm.controller.ReplyController">
 	  	<property name="replyMapper" ref="replyMapper"/>
+	  	<property name="commentMapper" ref="commentMapper"/>
 	</bean>
 	<bean id="linkController" class="me.paul.yiblog_ssm.controller.LinkController">
 	    <property name="linkMapper" ref="linkMapper"></property>

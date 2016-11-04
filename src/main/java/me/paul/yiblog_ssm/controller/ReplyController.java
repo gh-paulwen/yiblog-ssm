@@ -1,8 +1,11 @@
 package me.paul.yiblog_ssm.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import me.paul.yiblog_ssm.entity.Comment;
 import me.paul.yiblog_ssm.entity.Reply;
+import me.paul.yiblog_ssm.mapper.CommentMapper;
 import me.paul.yiblog_ssm.mapper.ReplyMapper;
 
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,12 @@ public class ReplyController {
 		this.replyMapper = replyMapper;
 	}
 	
+	private CommentMapper commentMapper;
+	
+	public void setCommentMapper(CommentMapper commentMapper) {
+		this.commentMapper = commentMapper;
+	}
+	
 	@RequestMapping(path="/save/{comment}/{fromUser}",method=RequestMethod.GET)
 	public String save(@PathVariable("comment")long comment,@PathVariable("fromUser")String fromUser,Model model){
 		Reply reply = new Reply();
@@ -32,8 +41,13 @@ public class ReplyController {
 	}
 	
 	@RequestMapping(path="/submitSave",method=RequestMethod.POST)
-	public String sumbitSave(@ModelAttribute("reply")Reply reply,Model model){
+	public String sumbitSave(@ModelAttribute("reply")Reply reply,Model model) throws UnsupportedEncodingException{
 		reply.setFromUser("paulWen");
+		Comment c = commentMapper.getById(reply.getComment());
+		c.setNewComment(0);
+		commentMapper.update(c);
+		String toUser = new String(reply.getToUser().getBytes("ISO-8859-1"),"UTF-8");
+		reply.setToUser(toUser);
 		replyMapper.insert(reply);
 		return "redirect:/operation";
 	}

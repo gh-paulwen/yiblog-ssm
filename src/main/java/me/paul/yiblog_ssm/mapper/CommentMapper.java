@@ -16,5 +16,9 @@ public interface CommentMapper {
 	
 	
 	List<Comment> getByPassage(long id);
+	
+	Comment getById(long id);
+	
+	void update(Comment c);
 
 }
