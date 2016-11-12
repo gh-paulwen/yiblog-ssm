@@ -124,6 +124,7 @@
 		<property name="passageMapper" ref="passageMapper" />
 		<property name="categoryMapper" ref="categoryMapper"/>
 		<property name="subCategoryMapper" ref="subCategoryMapper"/>
+		<property name="announcementMapper" ref="announcementMapper"/>
 		<property name="passagePerPage" value="3"/>
 	</bean>
 	<bean id="categoryController" class="me.paul.yiblog_ssm.controller.CategoryController">

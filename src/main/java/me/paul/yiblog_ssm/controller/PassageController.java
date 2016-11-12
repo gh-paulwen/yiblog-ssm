@@ -1,16 +1,19 @@
 package me.paul.yiblog_ssm.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.paul.yiblog_ssm.entity.Announcement;
 import me.paul.yiblog_ssm.entity.Category;
 import me.paul.yiblog_ssm.entity.Comment;
 import me.paul.yiblog_ssm.entity.Passage;
 import me.paul.yiblog_ssm.entity.Reply;
 import me.paul.yiblog_ssm.entity.SubCategory;
 import me.paul.yiblog_ssm.entity.User;
+import me.paul.yiblog_ssm.mapper.AnnouncementMapper;
 import me.paul.yiblog_ssm.mapper.CategoryMapper;
 import me.paul.yiblog_ssm.mapper.CommentMapper;
 import me.paul.yiblog_ssm.mapper.PassageMapper;
@@ -34,6 +37,7 @@ public class PassageController {
 	private SubCategoryMapper subCategoryMapper;
 	private CommentMapper commentMapper;
 	private ReplyMapper replyMapper;
+	private AnnouncementMapper announcementMapper;
 	private int passagePerPage;
 
 	public void setPassagePerPage(int passagePerPage) {
@@ -58,6 +62,10 @@ public class PassageController {
 
 	public void setReplyMapper(ReplyMapper replyMapper) {
 		this.replyMapper = replyMapper;
+	}
+	
+	public void setAnnouncementMapper(AnnouncementMapper announcementMapper) {
+		this.announcementMapper = announcementMapper;
 	}
 
 	/**
@@ -132,12 +140,15 @@ public class PassageController {
 			subCategory.setPassageCount(subCategory.getPassageCount() + 1);
 			Category category = categoryMapper.getById(subCategory
 					.getCategory().getId());
+			Announcement lastUpdate = announcementMapper.getById(3l);
+			lastUpdate.setTime(new Date());
 			category.setPassageCount(category.getPassageCount() + 1);
 			passage.setCategory(category);
 			User user = new User();
 			user.setId(1l);
 			passage.setAuthor(user);
 			passageMapper.insert(passage);
+			announcementMapper.update(lastUpdate);
 			subCategoryMapper.update(subCategory);
 			categoryMapper.update(category);
 		}
