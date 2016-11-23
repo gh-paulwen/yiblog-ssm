@@ -299,7 +299,7 @@
 
 			parts: {
 				pre: 'pre',
-				code: 'code'
+				code:'code'
 			},
 
 			highlight: function() {

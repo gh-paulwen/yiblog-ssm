@@ -112,12 +112,6 @@
 	<bean id="userController" class="me.paul.yiblog_ssm.controller.UserController">
 		<property name="userMapper" ref="userMapper" />
 	</bean>
-	<bean id="testController" class="me.paul.yiblog_ssm.controller.TestController">
-		<property name="categoryMapper" ref="categoryMapper" />
-		<property name="subCategoryMapper" ref="subCategoryMapper" />
-		<property name="passageMapper" ref="passageMapper" />
-		<property name="commentMapper" ref="commentMapper" />
-	</bean>
 	<bean id="passageController" class="me.paul.yiblog_ssm.controller.PassageController">
 	    <property name="commentMapper" ref="commentMapper"/>
 	    <property name="replyMapper" ref="replyMapper"/>

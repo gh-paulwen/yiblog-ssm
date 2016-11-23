@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * @author paul
+ * @since 
+ * 
+ * */
 @Controller
 @RequestMapping(path="/category")
 public class CategoryController {
@@ -21,6 +26,9 @@ public class CategoryController {
 		this.categoryMapper = categoryMapper;
 	}
 	
+	/**
+	 * 提交添加分类请求
+	 * */
 	@RequestMapping(path="/submitSave",method=RequestMethod.POST)
 	public String submitSave(@ModelAttribute("category")Category category,Model model){
 		categoryMapper.insert(category);
@@ -28,6 +36,9 @@ public class CategoryController {
 		return "message";
 	}
 	
+	/**
+	 * 
+	 * */
 	@RequestMapping(path="/getAll",method=RequestMethod.GET)
 	public String getAll(Model model){
 		List<Category> list = categoryMapper.getAll();

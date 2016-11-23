@@ -13,6 +13,7 @@
 
 <title>WJY的笔记本</title>
 
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <!-- Bootstrap Core CSS -->
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
 
