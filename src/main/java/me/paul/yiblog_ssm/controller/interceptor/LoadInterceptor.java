@@ -12,33 +12,23 @@ import me.paul.yiblog_ssm.mapper.AnnouncementMapper;
 import me.paul.yiblog_ssm.mapper.LinkMapper;
 import me.paul.yiblog_ssm.mapper.SubCategoryMapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class LoadInterceptor extends HandlerInterceptorAdapter {
 	
-	
+	@Autowired
 	private SubCategoryMapper subCategoryMapper;
 	
+	@Autowired
 	private AnnouncementMapper announcementMapper;
 	
+	@Autowired
 	private LinkMapper linkMapper;
-	
-	public void setAnnouncementMapper(AnnouncementMapper announcementMapper) {
-		this.announcementMapper = announcementMapper;
-	}
-	
-	public void setSubCategoryMapper(SubCategoryMapper subCategoryMapper) {
-		this.subCategoryMapper = subCategoryMapper;
-	}
-	
-	public void setLinkMapper(LinkMapper linkMapper) {
-		this.linkMapper = linkMapper;
-	}
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		
 		List<SubCategory> list = subCategoryMapper.getAll();
 		int halfsize = list.size()/2;
 		request.setAttribute("listSubCategory", list);

@@ -3,8 +3,9 @@ package me.paul.yiblog_ssm.controller;
 import java.util.List;
 
 import me.paul.yiblog_ssm.entity.Category;
-import me.paul.yiblog_ssm.mapper.CategoryMapper;
+import me.paul.yiblog_ssm.service.CategoryService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,18 +21,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(path="/category")
 public class CategoryController {
 	
-	private CategoryMapper categoryMapper;
-	
-	public void setCategoryMapper(CategoryMapper categoryMapper) {
-		this.categoryMapper = categoryMapper;
-	}
+	@Autowired
+	private CategoryService categoryService;
 	
 	/**
 	 * 提交添加分类请求
 	 * */
 	@RequestMapping(path="/submitSave",method=RequestMethod.POST)
 	public String submitSave(@ModelAttribute("category")Category category,Model model){
-		categoryMapper.insert(category);
+		categoryService.insert(category);
 		model.addAttribute("message", "添加成功");
 		return "message";
 	}
@@ -41,7 +39,7 @@ public class CategoryController {
 	 * */
 	@RequestMapping(path="/getAll",method=RequestMethod.GET)
 	public String getAll(Model model){
-		List<Category> list = categoryMapper.getAll();
+		List<Category> list = categoryService.getAll();
 		model.addAttribute("listCategory", list);
 		return "";
 	}

@@ -3,6 +3,10 @@ package me.paul.yiblog_ssm.entity;
 import java.util.Date;
 
 public class Announcement {
+	
+	public static final String REDIS_LAST_UPDATE_TIME = "lastupdatetime";
+	
+	public static final String REDIS_BUILD_TIME = "buildtime";
 
 	private long id;
 

@@ -12,8 +12,10 @@ public interface PassageMapper {
 	
 	void update(Passage passage);
 	
+	@Deprecated	
 	List<Passage> page(int from , int count);
 	
+	@Deprecated
 	List<Passage> categoryPage(long category , int from , int count);
 	
 	int passageCount();
@@ -23,5 +25,11 @@ public interface PassageMapper {
 	List<Passage> search(String content);
 	
 	List<Passage> getBasic();
+	
+	List<Passage> getAll();
+	
+	List<Long> categoryPageIds(long category,int from ,int count);
+	
+	List<Long> pageIds(int from,int count);
 
 }

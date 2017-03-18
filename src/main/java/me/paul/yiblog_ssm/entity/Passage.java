@@ -3,6 +3,10 @@ package me.paul.yiblog_ssm.entity;
 import java.util.Date;
 
 public class Passage {
+	
+	public static final String REDIS_PREFIX="passage_";
+	
+	public static final String REDIS_SIMPLE="passage_simple_";
 
 	private long id;
 
@@ -92,6 +96,14 @@ public class Passage {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getRedisId(){
+		return REDIS_PREFIX+id;
+	}
+	
+	public String getRedisSimpleId(){
+		return REDIS_SIMPLE + id;
 	}
 
 }

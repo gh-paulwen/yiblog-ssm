@@ -1,8 +1,10 @@
 package me.paul.yiblog_ssm.controller;
 
+import me.paul.yiblog_ssm.dto.ModelContent;
 import me.paul.yiblog_ssm.entity.SubCategory;
-import me.paul.yiblog_ssm.mapper.SubCategoryMapper;
+import me.paul.yiblog_ssm.service.SubCategoryService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,25 +15,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(path="/subCategory")
 public class SubCategoryController {
 	
-	private SubCategoryMapper subCategoryMapper ;
-	
-	public void setSubCategoryMapper(SubCategoryMapper subCategoryMapper) {
-		this.subCategoryMapper = subCategoryMapper;
-	}
+	@Autowired
+	private SubCategoryService subCategoryService;
 	
 	@RequestMapping(path="/submitSave",method=RequestMethod.POST)
 	public String submitSave(@ModelAttribute("subCategory")SubCategory subCategory,Model model){
-		subCategoryMapper.insert(subCategory);
-		model.addAttribute("message", "添加成功");
+		ModelContent mc = subCategoryService.save(subCategory);
+		mc.fillInModel(model);
 		return "message";
 	}
 	
 	@RequestMapping(path="/submitUpdate",method=RequestMethod.POST)
 	public String submitUpdate(@ModelAttribute("subCategory") SubCategory subCategory,Model model){
-		SubCategory origin = subCategoryMapper.getById(subCategory.getId());
-		origin.setLogopath(subCategory.getLogopath());
-		subCategoryMapper.update(origin);
-		model.addAttribute("message", "添加成功");
+		ModelContent mc = subCategoryService.updateLogopath(subCategory);
+		mc.fillInModel(model);
 		return "message";
 	}
 }

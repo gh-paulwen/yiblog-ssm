@@ -1,13 +1,12 @@
 package me.paul.yiblog_ssm.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
-import me.paul.yiblog_ssm.entity.Comment;
+import me.paul.yiblog_ssm.dto.ModelContent;
 import me.paul.yiblog_ssm.entity.Reply;
-import me.paul.yiblog_ssm.mapper.CommentMapper;
-import me.paul.yiblog_ssm.mapper.ReplyMapper;
+import me.paul.yiblog_ssm.service.ReplyService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,17 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(path="/reply")
 public class ReplyController {
 	
-	private ReplyMapper replyMapper;
-	
-	public void setReplyMapper(ReplyMapper replyMapper) {
-		this.replyMapper = replyMapper;
-	}
-	
-	private CommentMapper commentMapper;
-	
-	public void setCommentMapper(CommentMapper commentMapper) {
-		this.commentMapper = commentMapper;
-	}
+	@Autowired
+	private ReplyService replyService;
 	
 	@RequestMapping(path="/save/{comment}/{fromUser}",method=RequestMethod.GET)
 	public String save(@PathVariable("comment")long comment,@PathVariable("fromUser")String fromUser,Model model){
@@ -42,26 +32,21 @@ public class ReplyController {
 	
 	@RequestMapping(path="/submitSave",method=RequestMethod.POST)
 	public String sumbitSave(@ModelAttribute("reply")Reply reply,Model model) throws UnsupportedEncodingException{
-		reply.setFromUser("paulWen");
-		Comment c = commentMapper.getById(reply.getComment());
-		c.setNewComment(0);
-		commentMapper.update(c);
-		String toUser = new String(reply.getToUser().getBytes("ISO-8859-1"),"UTF-8");
-		reply.setToUser(toUser);
-		replyMapper.insert(reply);
+		ModelContent mc = replyService.save(reply);
+		mc.fillInModel(model);
 		return "redirect:/operation";
 	}
 	
 	@RequestMapping(path="/getAll",method=RequestMethod.GET)
 	public String getAll(Model model){
-		List<Reply> list = replyMapper.getAll();
-		model.addAttribute("listReply", list);
+		ModelContent mc = replyService.getAll();
+		mc.fillInModel(model);
 		return "replyList";
 	}
 	
 	public String getNew(Model model){
-		List<Reply> list = replyMapper.getNew();
-		model.addAttribute("listReply",list);
+		ModelContent mc = replyService.getNew();
+		mc.fillInModel(model);
 		return "replyList";
 	}
 

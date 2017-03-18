@@ -1,6 +1,8 @@
 package me.paul.yiblog_ssm.entity;
 
 public class Link {
+	
+	public static final String REDIS_PREFIX = "link_";
 
 	private long id;
 
@@ -60,6 +62,10 @@ public class Link {
 
 	public void setPass(int pass) {
 		this.pass = pass;
+	}
+	
+	public String getRedisId(){
+		return REDIS_PREFIX + id;
 	}
 
 }

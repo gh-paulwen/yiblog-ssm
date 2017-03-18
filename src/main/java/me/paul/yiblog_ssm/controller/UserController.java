@@ -8,6 +8,7 @@ import me.paul.yiblog_ssm.entity.User;
 import me.paul.yiblog_ssm.mapper.UserMapper;
 import me.paul.yiblog_ssm.util.CommonUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserController {
 	
+	@Autowired
 	private UserMapper userMapper;
-	
-	public void setUserMapper(UserMapper userMapper) {
-		this.userMapper = userMapper;
-	}
 	
 	private String target;
 	

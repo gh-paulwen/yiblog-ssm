@@ -5,6 +5,7 @@ import java.util.List;
 import me.paul.yiblog_ssm.entity.Link;
 import me.paul.yiblog_ssm.mapper.LinkMapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(path="/link")
 public class LinkController {
 	
-	private LinkMapper linkMapper ;
-	
-	public void setLinkMapper(LinkMapper linkMapper) {
-		this.linkMapper = linkMapper;
-	}
+	@Autowired
+	private LinkMapper linkService ;
 	
 	@RequestMapping(path="/save",method=RequestMethod.GET)
 	public String save(Model model){
@@ -33,7 +31,7 @@ public class LinkController {
 		Link link = new Link();
 		link.setId(id);
 		link.setPass(1);
-		linkMapper.update(link);
+		linkService.update(link);
 		return "redirect:/operation";
 	}
 	
@@ -51,14 +49,14 @@ public class LinkController {
 			model.addAttribute("message", "申请失败，没有完整填写信息");
 			return "message";
 		}
-		linkMapper.insert(link);
+		linkService.insert(link);
 		model.addAttribute("message", "申请成功，会尽快测评并回复");
 		return "message";
 	}
 	
 	@RequestMapping(path="/getLink",method=RequestMethod.GET)
 	public String getPass(Model model){
-		List<Link> list = linkMapper.getPass();
+		List<Link> list = linkService.getPass();
 		model.addAttribute("listLink", list);
 		return "linkList";
 	}

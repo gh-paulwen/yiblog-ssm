@@ -16,27 +16,19 @@
     <title>反馈-WJY的笔记本</title>
 
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
-    <!-- Bootstrap Core CSS -->
-    <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<link href="${pageContext.request.contextPath }/css/bootstrap.min.css"    rel="stylesheet">
+	<link href="http://libs.baidu.com/fontawesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/css/common.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/css/passage.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/css/wangEditor.min.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -46,7 +38,6 @@
                 </button>
                 <a class="navbar-brand" href="${pageContext.request.contextPath }/index">WJY的笔记本</a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
@@ -60,25 +51,17 @@
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
-    <!-- Page Content -->
     <div class="container">
-
         <div class="row">
-            <!-- Blog Post Content Column -->
             <div class="col-md-8">
-
-                <!-- Comments Form -->
                 <div class="well">
-                    
                     <form:form action="${pageContext.request.contextPath }/feedback/submitSave" method="POST" modelAttribute="feedback">
                         <div class="form-group">
                             <h4>反馈 :</h4>
-                            <form:textarea path="feedbackContent" class="form-control" rows="3" placeholder="反馈内容"></form:textarea>
+                            <form:textarea path="feedbackContent" class="form-control" rows="12" placeholder="反馈内容"></form:textarea>
                             <h4></h4>
                             <form:input path="username" class="form-control" placeholder="名字（选填）"/>
                             <h4></h4>
@@ -90,11 +73,8 @@
 
             </div>
 
-            <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
-
 			    <div class="well">
-				<!-- Blog Search Well -->
 				<div class="well">
 					<h4>搜索</h4>
 					<form id="search_form" action="${pageContext.request.contextPath }/passage/search" method="get">
@@ -107,9 +87,7 @@
 						</span>
 					</div>
 					</form>
-					<!-- /.input-group -->
 				</div>
-				<!-- Blog Categories Well -->
 				<div class="well">
 					<h4>文章分类</h4>
 					<div class="row">
@@ -121,7 +99,6 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
 								<c:forEach items="${requestScope.listSubCategory }"
@@ -130,13 +107,10 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 					</div>
-					<!-- /.row -->
 				</div>
 				</div>
 				
-				<!-- Link Well -->
 				<div class="well">
 				  <h4>推荐网站</h4>
 				  <h4></h4>
@@ -145,34 +119,103 @@
 				  </c:forEach>
 				</div>
 				
-				<!-- Side Widget Well -->
 				<div class="well">
 					<h4>${build.content } : <fmt:formatDate value="${build.time }" pattern="yyyy年MM月dd日"/></h4>
 					<h4>${lastUpdate.content } : <fmt:formatDate value="${lastUpdate.time }" pattern="yyyy年MM月dd日"/></h4>
 				</div>
 			</div>
 		</div>
-		<!-- /.row -->
 		<hr>
 
-        <!-- Footer -->
         <footer>
             <div class="row">
                 <div class="col-lg-12">
                     <p>Copyright &copy; WJY的笔记本</p>
                 </div>
             </div>
-            <!-- /.row -->
         </footer>
-
     </div>
-    <!-- /.container -->
 
-    <!-- jQuery -->
-    <script src="${pageContext.request.contextPath }/js/jquery.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/wangEditor.min.js"></script>
+    <script type="text/javascript">
+    $(function (){
+        var editor = new wangEditor('feedbackContent');
+        editor.config.uploadImgUrl = '/submit?type=image';
+        // 表情
+        editor.config.emotions = {
+            'default': {
+                title: '默认',
+                data: './wangEditor/test/emotions.data'
+            },
+            'weibo': {
+                title: '微博表情',
+                data: [
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
+                        value: '[草泥马]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
+                        value: '[神马]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif',
+                        value: '[浮云]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/c9/geili_thumb.gif',
+                        value: '[给力]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/f2/wg_thumb.gif',
+                        value: '[围观]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/70/vw_thumb.gif',
+                        value: '[威武]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/6e/panda_thumb.gif',
+                        value: '[熊猫]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/81/rabbit_thumb.gif',
+                        value: '[兔子]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/otm_thumb.gif',
+                        value: '[奥特曼]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/15/j_thumb.gif',
+                        value: '[囧]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/89/hufen_thumb.gif',
+                        value: '[互粉]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/c4/liwu_thumb.gif',
+                        value: '[礼物]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/ac/smilea_thumb.gif',
+                        value: '[呵呵]'
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/0b/tootha_thumb.gif',
+                        value: '[哈哈]'
+                    }
+                ]
+            }
+        };
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+        editor.create();
+        
+    });
+    </script>
     
     <script type="text/javascript">
 	  $(document).ready(function(){

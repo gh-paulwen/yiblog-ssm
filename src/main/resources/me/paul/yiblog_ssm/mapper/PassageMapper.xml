@@ -80,19 +80,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       passage.subCategory=subCategory.id
   </sql>
   
+   <sql id="baseForPage">
+    select 
+      passage.id as `passage.id`,
+      passage.title as `passage.title`,
+      passage.writetime as `passage.writetime`,
+      passage.outline as `passage.outline`,
+      user.id as `user.id`,
+      user.name as `user.name`,
+      subCategory.id as `subCategory.id`,
+      subCategory.name as `subCategory.name`,
+      subCategory.passageCount as `subCategory.passageCount`,
+      subCategory.logopath as `subCategory.logopath`
+      from passage,user,subCategory
+      where passage.author=user.id and
+      passage.subCategory=subCategory.id
+  </sql>
+  
   <select id="getById" parameterType="long" resultMap="passageMap">
   	  <include refid="baseSelect"/>
       and passage.id = #{id}
   </select>
   
   <select id="page" resultMap="passageMap">
-      <include refid="baseSelect"/>
+      <include refid="baseForPage"/>
       order by passage.writetime desc limit #{0} , #{1}
   </select>
   
   <select id="categoryPage" resultMap="passageMap">
-     <include refid="baseSelect"/>
+     <include refid="baseForPage"/>
      and passage.subCategory=#{0} order by passage.writetime desc limit #{1},#{2}
+  </select>
+  
+  <select id="categoryPageIds" resultType="Long">
+    select id from passage where subCategory=#{0} order by writetime desc limit #{1},#{2}
+  </select>
+  
+  <select id="pageIds" resultType="Long">
+    select id from passage order by writetime desc limit #{0},#{1}
   </select>
   
   <select id="passageCount" resultType="int">
@@ -112,7 +137,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select id,title from passage
   </select>
   
-  <insert id="insert" parameterType="Passage">
+  <select id="getAll" resultMap="passageMap">
+    <include refid="baseSelect"/>
+  </select>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Passage">
     insert into passage (title,author,outline,category,subCategory,content,writetime)
     values (#{title},#{author.id},#{outline},#{category.id},#{subCategory.id},#{content},now())
   </insert>

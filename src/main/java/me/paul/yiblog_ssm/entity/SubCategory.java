@@ -1,6 +1,8 @@
 package me.paul.yiblog_ssm.entity;
 
 public class SubCategory {
+	
+	public static final String REDIS_PREFIX = "subCategory_";
 
 	private long id;
 
@@ -50,6 +52,10 @@ public class SubCategory {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getRedisId(){
+		return REDIS_PREFIX + id;
 	}
 
 }

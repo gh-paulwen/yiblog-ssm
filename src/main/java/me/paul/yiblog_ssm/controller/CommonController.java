@@ -5,9 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,9 +25,13 @@ import me.paul.yiblog_ssm.mapper.CommentMapper;
 import me.paul.yiblog_ssm.mapper.FeedbackMapper;
 import me.paul.yiblog_ssm.mapper.LinkMapper;
 import me.paul.yiblog_ssm.mapper.PassageMapper;
+import me.paul.yiblog_ssm.util.ICachePassageUtil;
+import me.paul.yiblog_ssm.util.ICacheUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,52 +41,58 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Controller
 public class CommonController {
+	
+	@Autowired
+	private ICachePassageUtil icpu;
+	
+	@Autowired
+	private ICacheUtil icu;
 
+	@Autowired
 	private PassageMapper passageMapper;
-
+	
+	@Autowired
 	private CategoryMapper categoryMapper;
 
+	@Autowired
 	private CommentMapper commentMapper;
 
+	@Autowired
 	private LinkMapper linkMapper;
 
+	@Autowired
 	private FeedbackMapper feedbackMapper;
 
+	@Autowired
 	private CommonsMultipartResolver multipartResolver;
-
-	public void setMultipartResolver(CommonsMultipartResolver multipartResolver) {
-		this.multipartResolver = multipartResolver;
-	}
-
-	public void setCategoryMapper(CategoryMapper categoryMapper) {
-		this.categoryMapper = categoryMapper;
-	}
-
-	public void setPassageMapper(PassageMapper passageMapper) {
-		this.passageMapper = passageMapper;
-	}
-
-	public void setCommentMapper(CommentMapper commentMapper) {
-		this.commentMapper = commentMapper;
-	}
-
-	public void setFeedbackMapper(FeedbackMapper feedbackMapper) {
-		this.feedbackMapper = feedbackMapper;
-	}
-
-	public void setLinkMapper(LinkMapper linkMapper) {
-		this.linkMapper = linkMapper;
-	}
 
 	private int passagePerPage;
 
 	public void setPassagePerPage(int passagePerPage) {
 		this.passagePerPage = passagePerPage;
 	}
+	
+	private String imagePath;
+	
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
+	private String uploadPath;
+	
+	public void setUploadPath(String uploadPath) {
+		this.uploadPath = uploadPath;
+	}
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public String index(Model model) {
-		List<Passage> listPassage = passageMapper.page(0, passagePerPage);
+		List<Passage> listPassage = Collections.emptyList(); 
+		List<Long> ids = passageMapper.pageIds(0, passagePerPage);
+		List<String> redisIds = new ArrayList<>();
+		for(Long id : ids){
+			redisIds.add(Passage.REDIS_SIMPLE + id);
+		}
+		listPassage = icpu.list(redisIds);
 		model.addAttribute("listPassage", listPassage);
 		int totalPassageCount = passageMapper.passageCount();
 		if (totalPassageCount <= passagePerPage * 1) {
@@ -125,18 +138,18 @@ public class CommonController {
 
 	@RequestMapping(path = "/submitUpload", method = RequestMethod.POST)
 	public String submitUpload(HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam("filepath") String filepath)
+			HttpServletResponse response,@RequestParam("type") String type)
 			throws IllegalStateException, IOException {
+		String path = uploadPath + type + File.separator;
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> iter = multipartRequest.getFileNames();
 			while (iter.hasNext()) {
 				MultipartFile file = multipartRequest.getFile(iter.next());
+				String filepath = file.getOriginalFilename();
 				if (file != null) {
-					String path = request.getServletContext().getRealPath(
-							"/WEB-INF/static/");
-					File localFile = new File(path, filepath);
+					path = path + filepath;
+					File localFile = new File(path);
 					file.transferTo(localFile);
 				}
 			}
@@ -153,7 +166,7 @@ public class CommonController {
 		response.setHeader("Content-Disposition", "attachment;fileName="+filename);
 		
 		try{
-			String path = request.getServletContext().getRealPath("/WEB-INF/static/file/");
+			String path = uploadPath + "/file/";
 			File file = new File(path,filename);
 			InputStream inputStream = new FileInputStream(file);
 			
@@ -171,5 +184,65 @@ public class CommonController {
 		}
 		return null;
 	}
-
+	
+	@RequestMapping(path="/CKFinderJava/userfiles/images/{imagename:[a-zA-Z0-9_\\.]+}",method=RequestMethod.GET)
+	public void image(@PathVariable("imagename") String imagename,OutputStream output) throws IOException{
+		imagename = imagePath + imagename;
+		File image = new File(imagename);
+		InputStream input = null;
+		if(image.exists()){
+			input = new FileInputStream(image);
+			byte[] buf = new byte[4096];
+			int len = 0;
+			while((len = input.read(buf)) > 0){
+				output.write(buf, 0, len);
+			}
+		}else{
+			output.write("image not exists".getBytes());
+		}
+		if(input != null ) {input.close();}
+	}
+	
+	@RequestMapping(path="/retriveImg",method=RequestMethod.GET)
+	public void newImage(@RequestParam("img") String img,OutputStream output) throws IOException{
+		img = imagePath + img;
+		File image = new File(img);
+		InputStream input = null;
+		if(image.exists()){
+			input = new FileInputStream(image);
+			byte[] buf = new byte[4096];
+			int len = 0;
+			while((len = input.read(buf)) > 0){
+				output.write(buf, 0, len);
+			}
+		}else{
+			output.write("image not exists".getBytes());
+		}
+		if(input != null ) {input.close();}
+	}
+	
+	@RequestMapping(path="/logo/{logoname:[a-zA-Z_\\.]+}",method=RequestMethod.GET)
+	public void logo(@PathVariable("logoname")String logoname,OutputStream output) throws IOException{
+		String path = uploadPath + "logo" + File.separator + logoname;
+		File image = new File(path);
+		InputStream input = null;
+		if(image.exists()){
+			input = new FileInputStream(image);
+			byte[] buf = new byte[4096];
+			int len = 0;
+			while((len = input.read(buf)) > 0){
+				output.write(buf, 0, len);
+			}
+		}else{
+			output.write("logo not exists".getBytes());
+		}
+		if(input != null ) {input.close();}
+	}
+	
+	@PostConstruct
+	public void postConstruct(){
+		icu.flush();
+		List<Passage> list = passageMapper.getAll();
+		icpu.batchSave(list);
+	}
 }

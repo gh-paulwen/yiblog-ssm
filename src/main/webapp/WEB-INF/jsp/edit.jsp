@@ -16,27 +16,17 @@
 <title>修改文章-WJY的笔记本</title>
 
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
-<!-- Bootstrap Core CSS -->
-<link href="${pageContext.request.contextPath }/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="${pageContext.request.contextPath }/css/blog-post.css"
-	rel="stylesheet">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://libs.baidu.com/fontawesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/common.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/passage.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/wangEditor.min.css" rel="stylesheet">
 
 </head>
 <body>
-	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
@@ -56,14 +46,10 @@
 					<li><a href="${pageContext.request.contextPath }/link/save">申请友链</a></li>
 				</ul>
 			</div>
-			<!-- /.navbar-collapse -->
 		</div>
-		<!-- /.container -->
 	</nav>
-	<!-- Page Content -->
 	<div class="container">
 		<div class="row">
-			<!-- Blog Post Content Column -->
 			<div class="col-md-8">
 				<form:form action="${pageContext.request.contextPath }/passage/submitEdit" method="POST" modelAttribute="passage">
 				   <input type="hidden" name="before" value="${beforeModify }">
@@ -75,11 +61,11 @@
                       <h4></h4>
                       <form:input class="form-control" placeholder="梗概" path="outline"/>
                       <h4></h4>
-                      <form:textarea name="content" path="content"></form:textarea>
+                      <form:textarea name="content" path="content" rows="15"></form:textarea>
+                      <input type="submit" >
                    </div>
                  </form:form>
 			</div>
-			<!-- Blog Sidebar Widgets Column -->
 			<div class="col-md-4">
 			    <div class="well">
 				<div class="well">
@@ -94,9 +80,7 @@
 						</span>
 					</div>
 					</form>
-					<!-- /.input-group -->
 				</div>
-				<!-- Blog Categories Well -->
 				<div class="well">
 					<h4>文章分类</h4>
 					<div class="row">
@@ -108,7 +92,6 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
 								<c:forEach items="${requestScope.listSubCategory }"
@@ -117,9 +100,7 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 					</div>
-					<!-- /.row -->
 				</div>
 				</div>
 				
@@ -132,32 +113,27 @@
 				  </c:forEach>
 				</div>
 				
-				<!-- Side Widget Well -->
 				<div class="well">
 					<h4>${build.content } : <fmt:formatDate value="${build.time }" pattern="yyyy年MM月dd日"/></h4>
 					<h4>${lastUpdate.content } : <fmt:formatDate value="${lastUpdate.time }" pattern="yyyy年MM月dd日"/></h4>
 				</div>
 			</div>
 		</div>
-		<!-- /.row -->
 		<hr>
-		<!-- Footer -->
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
 					<p>Copyright &copy; WJY的笔记本</p>
 				</div>
 			</div>
-			<!-- /.row -->
 		</footer>
 
 	</div>
-	<!-- /.container -->
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/ckfinder/ckfinder.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/wangEditor.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/passage.js"></script>
 	<script type="text/javascript">
 	  $(document).ready(function(){
 		  $("#btn_submit").click(function(){
@@ -165,24 +141,8 @@
 		  });
 	  });
 	</script>
-	<script type="text/javascript">
-			var editor = CKEDITOR.replace('content',{
-				height : '400px',
-				filebrowserBrowseUrl : '${pageContext.request.contextPath}/ckfinder/ckfinder.html',
-				filebrowserImageBrowseUrl : '${pageContext.request.contextPath}/ckfinder/ckfinder.html?Type=Images',
-				filebrowserFlashBrowseUrl : '${pageContext.request.contextPath}/ckfinder/ckfinder.html?Type=Flash',
-				filebrowserUploadUrl : '${pageContext.request.contextPath}/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files',
-				filebrowserImageUploadUrl : '${pageContext.request.contextPath}/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images',
-				filebrowserFlashUploadUrl : '${pageContext.request.contextPath}/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash',
-				filebrowserWindowHeight : '50%',
-				filebrowserWindowWidth : '70%'
-			});	
-			CKFinder.setupCKEditor(editor);
-	</script>
+	<script type="text/javascript"></script>
 	
-	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260575777'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260575777%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-	
-
 </body>
 
 </html>

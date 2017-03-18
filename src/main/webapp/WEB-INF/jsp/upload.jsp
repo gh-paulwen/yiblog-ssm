@@ -26,11 +26,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
-
 <body>
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -62,33 +59,44 @@
         </div>
         <!-- /.container -->
     </nav>
-
     <!-- Page Content -->
     <div class="container">
-
         <div class="row">
             <!-- Blog Post Content Column -->
             <div class="col-md-8">
-
-                <!-- Comments Form -->
                 <div class="well">
-                    
                     <form action="${pageContext.request.contextPath }/submitUpload" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
-                            <h4>上传 :</h4>
+                            <h4>图片上传 :</h4>
                             <input name="file" type="file">
-                            <h4>文件路径</h4>
-                            <input name="filepath" type="text" class="form-control">                            
+                            <input type="hidden" name="type" value="image">
                         </div>
                         <input type="submit" class="btn btn-primary" value="提交">
                     </form>
                 </div>
-
+                <div class="well">
+                    <form action="${pageContext.request.contextPath }/submitUpload" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <h4>文件上传 :</h4>
+                            <input name="file" type="file">
+                            <input type="hidden" name="type" value="file">
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="提交">
+                    </form>
+                </div>
+                <div class="well">
+                    <form action="${pageContext.request.contextPath }/submitUpload" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <h4>图标上传 :</h4>
+                            <input name="file" type="file">
+                            <input type="hidden" name="type" value="logo">
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="提交">
+                    </form>
+                </div>
             </div>
-
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
-
 			    <div class="well">
 				<!-- Blog Search Well -->
 				<div class="well">
@@ -131,7 +139,6 @@
 					<!-- /.row -->
 				</div>
 				</div>
-				
 				<!-- Link Well -->
 				<div class="well">
 				  <h4>推荐网站</h4>
@@ -140,7 +147,6 @@
 				    <h4><a target="_blank" href="${link.url }"><c:out value="${link.name }"/></a></h4>
 				  </c:forEach>
 				</div>
-				
 				<!-- Side Widget Well -->
 				<div class="well">
 					<h4>${build.content } : <fmt:formatDate value="${build.time }" pattern="yyyy年MM月dd日"/></h4>
@@ -150,7 +156,6 @@
 		</div>
 		<!-- /.row -->
 		<hr>
-
         <!-- Footer -->
         <footer>
             <div class="row">
@@ -160,7 +165,6 @@
             </div>
             <!-- /.row -->
         </footer>
-
     </div>
     <!-- /.container -->
 
