@@ -142,7 +142,7 @@
     <script type="text/javascript">
     $(function (){
         var editor = new wangEditor('feedbackContent');
-        editor.config.uploadImgUrl = '/submit?type=image';
+        editor.config.uploadImgUrl = '/uploadImg';
         // 表情
         editor.config.emotions = {
             'default': {

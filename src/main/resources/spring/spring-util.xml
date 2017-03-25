@@ -8,7 +8,6 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<!-- abondon redis 
 	<bean name="redisUtil" class="me.paul.yiblog_ssm.util.RedisUtil">
 		<property name="host" value="redis" />
 		<property name="port" value="6379" />
@@ -19,8 +18,8 @@
 		<property name="ru" ref="redisUtil" />
 	</bean>
 	
-	-->
 	
+	<!-- memcached 
 	<bean name="inetAddress" class="java.net.InetSocketAddress">
 	  <constructor-arg value="memcached"/>
 	  <constructor-arg value="11211"/>
@@ -38,4 +37,10 @@
 	</bean>
 	
 	<bean name="gson" class="com.google.gson.Gson"/>
+	
+	-->
+	
+	<!-- noCache 
+	<bean name="noCachedPassageUtil" class="me.paul.yiblog_ssm.util.NoCachePassageUtil"/>
+	-->
 </beans>

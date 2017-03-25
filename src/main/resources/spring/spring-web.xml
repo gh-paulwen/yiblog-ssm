@@ -42,10 +42,13 @@
     
     <bean id="commonController" class="me.paul.yiblog_ssm.controller.CommonController">
       <property name="passagePerPage" value="5"/>
-      <property name="imagePath" value="/upload/image/"/>
-      <property name="uploadPath" value="/upload/"/>
+      
     </bean>
     
+    <bean id="fileController" class="me.paul.yiblog_ssm.controller.FileController">
+        <property name="imagePath" value="/upload/image/"/>
+        <property name="uploadPath" value="/upload/"/>
+    </bean>
      
     
 </beans>

@@ -1,7 +1,6 @@
 package me.paul.yiblog_ssm.service.impl;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -134,12 +133,7 @@ public class PassageServiceImpl implements PassageService{
 	public ModelContent page(int page,int passagePerPage) {
 		ModelContent mc = new ModelContent();
 		List<Passage> listPassage = Collections.emptyList();
-		List<Long> ids = passageMapper.pageIds( (page - 1) * passagePerPage, passagePerPage);
-		List<String> keys = new ArrayList<>();
-		for(Long id:ids){
-			keys.add(Passage.REDIS_SIMPLE + id);
-		}
-		listPassage = icpu.list(keys);
+		listPassage = icpu.simpleList(page,passagePerPage);
 		mc.save("listPassage", listPassage);
 		int totalPassageCount = passageMapper.passageCount();
 		if (totalPassageCount <= passagePerPage * page) {
@@ -159,12 +153,7 @@ public class PassageServiceImpl implements PassageService{
 	public ModelContent categoryPage(long category, int page,int passagePerPage) {
 		ModelContent mc = new ModelContent();
 		List<Passage> list = Collections.emptyList(); 
-		List<Long> ids = passageMapper.categoryPageIds(category, (page - 1) * passagePerPage, passagePerPage);
-		List<String> redisIds = new ArrayList<>();
-		for(Long id : ids){
-			redisIds.add(Passage.REDIS_SIMPLE + id);
-		}
-		list = icpu.list(redisIds);
+		list = icpu.simpleList(page, passagePerPage, category);
 		mc.save("listPassage", list);
 		mc.save("category", category);
 		int categoryPassageCount = passageMapper.categoryPassageCount(category);

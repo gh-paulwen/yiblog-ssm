@@ -2,7 +2,7 @@ $(function (){
 
     var editor = new wangEditor('content');
 
-    editor.config.uploadImgUrl = '/submit?type=image';
+    editor.config.uploadImgUrl = '/uploadImg';
 
     // 表情
     editor.config.emotions = {

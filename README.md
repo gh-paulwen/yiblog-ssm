@@ -16,3 +16,9 @@ change logs
 2.让用户提交友链
 3.改善界面布局
 4.改用ssm框架
+
+
+change logs 2017-03-24
+
+fixed wangEditor upload
+decoupled mysql redis memcached 

@@ -12,10 +12,16 @@ public interface ICachePassageUtil {
 	
 	Passage get(String key);
 	
-	List<Passage> list(List<String> keys);
+	List<Passage> list(int page,int passagePerPage);
+	
+	List<Passage> list(int page,int passagePerPage,long category);
+	
+	List<Passage> simpleList(int page,int passagePerPage);
+	
+	List<Passage> simpleList(int page,int passagePerPage,long category);
 	
 	void batchSave(List<Passage> list);
 	
 	void flush();
-
+	
 }
