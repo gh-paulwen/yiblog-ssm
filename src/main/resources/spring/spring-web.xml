@@ -25,23 +25,27 @@
     <mvc:interceptors>
       <bean id="loadInterceptor" class="me.paul.yiblog_ssm.controller.interceptor.LoadInterceptor" autowire="default"/>
       <mvc:interceptor>
-        <mvc:mapping path="/operation"/>
         <mvc:mapping path="/cates"/>
-        <mvc:mapping path="/link/pass/*"/>
-        <mvc:mapping path="/passage/save"/>
-        <mvc:mapping path="/passage/edit/*"/>
+        <mvc:mapping path="/link/pass/*"/>        
         <mvc:mapping path="/upload"/>
+        <mvc:mapping path="/adminOperation"/>
         <bean id="adminInterceptor" class="me.paul.yiblog_ssm.controller.interceptor.AdminInterceptor"/>
+      </mvc:interceptor>
+      <mvc:interceptor>
+        <mvc:mapping path="/passage/edit/*"/>
+        <mvc:mapping path="/passage/save"/>
+        <mvc:mapping path="/operation"/>
+        <bean id="userInterceptor" class="me.paul.yiblog_ssm.controller.interceptor.UserInterceptor"/>
       </mvc:interceptor>
     </mvc:interceptors>
     
     
     <bean id="passageController" class="me.paul.yiblog_ssm.controller.PassageController">
-      <property name="passagePerPage" value="5"/>
+      <property name="passagePerPage" value="8"/>
     </bean>
     
     <bean id="commonController" class="me.paul.yiblog_ssm.controller.CommonController">
-      <property name="passagePerPage" value="5"/>
+      <property name="passagePerPage" value="8"/>
       
     </bean>
     

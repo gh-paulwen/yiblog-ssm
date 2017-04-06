@@ -10,7 +10,7 @@ public interface ICachePassageUtil {
 	
 	void set(Passage passage);
 	
-	Passage get(String key);
+	Passage get(long key);
 	
 	List<Passage> list(int page,int passagePerPage);
 	

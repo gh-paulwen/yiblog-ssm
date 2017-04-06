@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </resultMap>
 
   <resultMap type="User" id="userMap">
-    <id column="id" property="id"/>
+    <id column="user.id" property="id"/>
     <result column="user.name" property="name" javaType="java.lang.String"/>
     <result column="user.email" property="email" javaType="java.lang.String"/>
     <result column="user.phonenumber" property="phonenumber" javaType="java.lang.String"/>
@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select 
       user.id as `user.id`,
       user.name as `user.name`,
+      user.email as `user.email`,
       user.phonenumber as `user.phonenumber`,
       user.sex as `user.sex`,
       user.birthDate as `user.birthDate`,
@@ -51,5 +52,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <select id="getAll" resultMap="userMap">
     <include refid="baseSelect"/>
+  </select>
+  
+  <insert id="insert" parameterType="User">
+    insert into user (name,email,password,registerDate,powerid,sex) values (#{name},#{email},#{password},now(),2,0)
+  </insert>
+  
+  <update id="update" parameterType="User">
+    update user set password=#{password},phonenumber=#{phonenumber},lastLoginDate=#{lastLoginDate} where email=#{email} or name=#{name}
+  </update>
+  
+  <select id="getAuthorNameByPassage" resultType="java.lang.String" parameterType="long">
+    select name from user where id=(select author from passage where id=#{0})
   </select>
 </mapper>

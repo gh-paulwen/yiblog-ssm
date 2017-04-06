@@ -13,28 +13,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>申请友链-WJY的笔记本</title>
+    <title>申请友链-XXXX</title>
 
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
-    <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -42,37 +30,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${pageContext.request.contextPath }/index">WJY的笔记本</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath }/index">XXXX</a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="${pageContext.request.contextPath }/about">关于</a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath }/feedback/save">反馈</a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath }/link/save">申请友链</a>
-                    </li>
+                    <li><a href="${pageContext.request.contextPath }/about">关于</a></li>
+                    <li><a href="${pageContext.request.contextPath }/feedback/save">反馈</a></li>
+                    <li><a href="${pageContext.request.contextPath }/link/save">申请友链</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="${pageContext.request.contextPath }/operation">操作中心</a></li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
-    <!-- Page Content -->
     <div class="container">
 
         <div class="row">
-            <!-- Blog Post Content Column -->
             <div class="col-md-8">
-
-                <!-- Comments Form -->
                 <div class="well">
-                    
                     <form:form action="${pageContext.request.contextPath }/link/submitSave" method="POST" modelAttribute="link">
                         <div class="form-group">
                             <h4>申请友链 （以下均为必填字段）:</h4>
@@ -87,14 +64,10 @@
                         <input type="submit" class="btn btn-primary" value="提交">
                     </</form:form>
                 </div>
-
             </div>
 
-            <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
-
 			    <div class="well">
-				<!-- Blog Search Well -->
 				<div class="well">
 					<h4>搜索</h4>
 					<form id="search_form" action="${pageContext.request.contextPath }/passage/search" method="get">
@@ -107,9 +80,7 @@
 						</span>
 					</div>
 					</form>
-					<!-- /.input-group -->
 				</div>
-				<!-- Blog Categories Well -->
 				<div class="well">
 					<h4>文章分类</h4>
 					<div class="row">
@@ -121,7 +92,6 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
 								<c:forEach items="${requestScope.listSubCategory }"
@@ -130,13 +100,9 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 					</div>
-					<!-- /.row -->
 				</div>
 				</div>
-				
-				<!-- Link Well -->
 				<div class="well">
 				  <h4>推荐网站</h4>
 				  <h4></h4>
@@ -144,36 +110,24 @@
 				    <h4><a target="_blank" href="${link.url }"><c:out value="${link.name }"/></a></h4>
 				  </c:forEach>
 				</div>
-				
-				<!-- Side Widget Well -->
 				<div class="well">
 					<h4>${build.content } : <fmt:formatDate value="${build.time }" pattern="yyyy年MM月dd日"/></h4>
 					<h4>${lastUpdate.content } : <fmt:formatDate value="${lastUpdate.time }" pattern="yyyy年MM月dd日"/></h4>
 				</div>
 			</div>
 		</div>
-		<!-- /.row -->
 		<hr>
-
-        <!-- Footer -->
         <footer>
             <div class="row">
                 <div class="col-lg-12">
                     <p>Copyright &copy; WJY的笔记本</p>
                 </div>
             </div>
-            <!-- /.row -->
         </footer>
-
     </div>
-    <!-- /.container -->
 
-    <!-- jQuery -->
     <script src="${pageContext.request.contextPath }/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
     <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
-    
     <script type="text/javascript">
 	  $(document).ready(function(){
 		  $("#btn_submit").click(function(){
@@ -181,22 +135,7 @@
 		  });
 	  });
 	</script>
-	
 	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260575777'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260575777%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-	<script>
-		(function(){
-			var bp = document.createElement('script');
-	    	var curProtocol = window.location.protocol.split(':')[0];
-	    	if (curProtocol === 'https') {
-	        	bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-	    	}
-	    	else {
-	        	bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-	    	}
-	    	var s = document.getElementsByTagName("script")[0];
-	    	s.parentNode.insertBefore(bp, s);
-		})();
-	</script>
 </body>
 
 </html>

@@ -12,13 +12,12 @@ public interface CommentMapper {
 	
 	List<Comment> getAll();
 	
-	List<Comment> getNew();
-	
+	List<Comment> getNew(long author);
 	
 	List<Comment> getByPassage(long id);
 	
 	Comment getById(long id);
 	
 	void update(Comment c);
-
+	
 }

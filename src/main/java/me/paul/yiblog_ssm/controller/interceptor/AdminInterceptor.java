@@ -14,17 +14,17 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		String str = request.getRequestURI();
-		if(str.matches("/.+/.+")){
-			str = str.substring(1);
-		}
-		int index = str.indexOf('/');
-		if(index >= 0){
-			str = str.substring(index);
-		}
+		String contextPath = request.getContextPath();
+		str = str.replace(contextPath, "");
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("currentAdmin");
-		if(user == null){
+		User user = (User) session.getAttribute("currentUser");
+		if(user == null ){
 			response.sendRedirect(request.getContextPath() + "/login?target=" + str);
+			return false;
+		}
+		if(user.getPower().getId() != 1){
+			request.setAttribute("message", "you are not a administrator");
+			request.getRequestDispatcher("/message").forward(request, response);
 			return false;
 		}
 		return true;

@@ -21,8 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select * from comment order by commenttime desc
   </select>
   
-  <select id="getNew" resultType="Comment">
-    select * from comment where newComment=1 order by commenttime desc
+  <select id="getNew" resultType="Comment" parameterType="long">
+    select * from comment where newComment=1 and passage in (select id from passage where author=#{0}) order by commenttime desc
   </select>
   
   <select id="getByPassage" resultType="Comment" parameterType="long">

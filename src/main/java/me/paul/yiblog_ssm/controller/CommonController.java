@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import me.paul.yiblog_ssm.entity.Category;
 import me.paul.yiblog_ssm.entity.Comment;
@@ -11,16 +12,19 @@ import me.paul.yiblog_ssm.entity.Feedback;
 import me.paul.yiblog_ssm.entity.Link;
 import me.paul.yiblog_ssm.entity.Passage;
 import me.paul.yiblog_ssm.entity.SubCategory;
+import me.paul.yiblog_ssm.entity.User;
 import me.paul.yiblog_ssm.mapper.CategoryMapper;
 import me.paul.yiblog_ssm.mapper.CommentMapper;
 import me.paul.yiblog_ssm.mapper.FeedbackMapper;
 import me.paul.yiblog_ssm.mapper.LinkMapper;
 import me.paul.yiblog_ssm.mapper.PassageMapper;
+import me.paul.yiblog_ssm.mapper.UserMapper;
 import me.paul.yiblog_ssm.util.ICachePassageUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,6 +36,9 @@ public class CommonController {
 	
 	@Autowired
 	private PassageMapper passageMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 	
 	@Autowired
 	private CategoryMapper categoryMapper;
@@ -66,8 +73,13 @@ public class CommonController {
 		return "index";
 	}
 
-	@RequestMapping(path = "/about", method = RequestMethod.GET)
-	public String about() {
+	@RequestMapping(path = "/page/{page}", method = RequestMethod.GET)
+	public String page(@PathVariable("page") String page) {
+		return page;
+	}
+	
+	@RequestMapping(path="/about",method=RequestMethod.GET)
+	public String about(){
 		return "about";
 	}
 
@@ -81,16 +93,31 @@ public class CommonController {
 	}
 
 	@RequestMapping(path = "/operation", method = RequestMethod.GET)
-	public String operation(Model model) {
-		List<Comment> listComment = commentMapper.getNew();
-		List<Link> listLink = linkMapper.getAll();
-		List<Feedback> listFeedback = feedbackMapper.getAll();
-		List<Passage> listPassage = passageMapper.getBasic();
+	public String operation(HttpSession session,Model model) {
+		User user = (User) session.getAttribute("currentUser");
+		List<Comment> listComment = commentMapper.getNew(user.getId());
+		List<Passage> listPassage = passageMapper.getBasic(user.getId());
 		model.addAttribute("listComment", listComment);
-		model.addAttribute("listLink", listLink);
-		model.addAttribute("listFeedback", listFeedback);
 		model.addAttribute("listPassage", listPassage);
 		return "operation";
+	}
+	
+	@RequestMapping(path="/adminOperation",method=RequestMethod.GET)
+	public String adminOperation(Model model){
+		List<Feedback> listFeedback = feedbackMapper.getAll();
+		List<Link> listLink = linkMapper.getAll();
+		List<Passage> listPassage = passageMapper.getBasicAll();
+		List<User> listUser = userMapper.getAll();
+		model.addAttribute("listFeedback", listFeedback);
+		model.addAttribute("listLink", listLink);
+		model.addAttribute("listPassage", listPassage);
+		model.addAttribute("listUser", listUser);
+		return "adminOperation";
+	}
+	
+	@RequestMapping(path="/message",method=RequestMethod.GET)
+	public String message(){
+		return "message";
 	}
 	
 	@PostConstruct

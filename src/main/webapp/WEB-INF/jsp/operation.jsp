@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -12,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>操作-WJY的笔记本</title>
+<title>操作中心-XXXX</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
@@ -29,7 +28,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand"
-					href="${pageContext.request.contextPath }/index">WJY的笔记本</a>
+					href="${pageContext.request.contextPath }/index">XXXX</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -38,6 +37,9 @@
 					<li><a href="${pageContext.request.contextPath }/feedback/save">反馈</a></li>
 					<li><a href="${pageContext.request.contextPath }/link/save">申请友链</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+                    <li><a href="${pageContext.request.contextPath }/operation">操作中心</a></li>
+                </ul>
 			</div>
 		</div>
 	</nav>
@@ -46,9 +48,9 @@
 			<div class="col-md-8">
 			<div class="well">
              <h4>operations</h4>
-             <a href="${pageContext.request.contextPath }/upload">上传</a>
-             <a href="${pageContext.request.contextPath }/cates">添加分类</a>
-             <a href="${pageContext.request.contextPath }/passage/save">写文章</a>
+             <a href="${pageContext.request.contextPath }/adminOperation" class="btn btn-default">管理员操作中心</a>
+             <a href="${pageContext.request.contextPath }/passage/save" class="btn btn-default">写文章</a>
+             <a href="${pageContext.request.contextPath }/logout" class="btn btn-default">退出</a>
             </div>
 			<div class="well">
 			  <h4>comment</h4>
@@ -69,60 +71,10 @@
 			          <td><c:out value="${comment.fromUser }"/></td>
 			          <td><fmt:formatDate value="${comment.commenttime }" pattern="yyyy年MM月dd日"/></td>
 			          <td>${comment.content }</td>
-			          <td><a href="${pageContext.request.contextPath }/reply/save/${comment.id}/${comment.fromUser}">回复</a></td>
-			        </tr>
-			      </c:forEach>
-			    </tbody>
-			  </table>
-			</div>
-			
-			<div class="well">
-			  <h4>feedback</h4>
-			  <table class="table">
-			    <thead>
-			      <tr>
-			        <th>username</th>
-			        <th>email</th>
-			        <th>time</th>
-			        <th>content</th>
-			      </tr>
-			    </thead>
-			    <tbody>
-			      <c:forEach items="${listFeedback }" var="feedback">
-			        <tr>
-			          <td><c:out value="${feedback.username }"/></td>
-			          <td><c:out value="${feedback.email }"/></td>
-			          <td><fmt:formatDate value="${feedback.feedbackDate }" pattern="yyyy-MM-dd"/></td>
-			          <td>${feedback.feedbackContent }</td>
-			        </tr>
-			      </c:forEach>
-			    </tbody>
-			  </table>
-			</div>
-			
-			<div class="well">
-			  <h4>link</h4>
-			  <table class="table">
-			    <thead>
-			      <tr>
-			        <th>name</th>
-			        <th>email</th>
-			        <th>url</th>
-			        <th>status</th>
-			        <th>operation</th>
-			      </tr>
-			    </thead>
-			    <tbody>
-			      <c:forEach items="${listLink }" var="link">
-			        <tr>
-			          <td><c:out value="${link.name }"/></td>
-			          <td><c:out value="${link.email }"/></td>
-			          <td><c:out value="${link.url }"/></td>
-			          <td><c:choose>
-			            <c:when test="${link.pass == 1 }">pass</c:when>
-			            <c:otherwise>not pass</c:otherwise>
-			          </c:choose></td>
-			          <td><a href="${pageContext.request.contextPath }/link/pass/${link.id}">pass</a></td>
+			          <td>
+			             <a href="${pageContext.request.contextPath }/reply/save/${comment.id}/${comment.fromUser}">回复</a>
+			             <a href="${pageContext.request.contextPath }/comment/read/${comment.id}">忽略</a>
+			          </td>
 			        </tr>
 			      </c:forEach>
 			    </tbody>
@@ -136,6 +88,7 @@
 			      <tr>
 			        <th>id</th>
 			        <th>title</th>
+			        <th>available</th>
 			        <th>operation</th>
 			      </tr>
 			    </thead>
@@ -144,14 +97,13 @@
 			        <tr>
 			          <td><c:out value="${passage.id }"/></td>
 			          <td><c:out value="${passage.title }"/></td>
+			          <td><c:out value="${passage.available }"></c:out></td>
 			          <td><a href="${pageContext.request.contextPath }/passage/edit/${passage.id}">edit</a></td>
 			        </tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
 			</div>
-			
-			
 			</div>
 			<div class="col-md-4">
 			    <div class="well">
@@ -179,7 +131,6 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
 								<c:forEach items="${requestScope.listSubCategory }"
@@ -200,35 +151,25 @@
 				  </c:forEach>
 				</div>
 				
-				<!-- Side Widget Well -->
 				<div class="well">
 					<h4>${build.content } : <fmt:formatDate value="${build.time }" pattern="yyyy年MM月dd日"/></h4>
 					<h4>${lastUpdate.content } : <fmt:formatDate value="${lastUpdate.time }" pattern="yyyy年MM月dd日"/></h4>
 				</div>
 			</div>
 		</div>
-		<!-- /.row -->
 		<hr>
-		<!-- Footer -->
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
 					<p>Copyright &copy; WJY的笔记本</p>
 				</div>
 			</div>
-			<!-- /.row -->
 		</footer>
-
 	</div>
-	<!-- /.container -->
-
-	<!-- jQuery -->
 	<script src="${pageContext.request.contextPath }/js/jquery.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
-		<script type="text/javascript">
+	<script	src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+	
+    <script type="text/javascript">
 	  $(document).ready(function(){
 		  $("#btn_submit").click(function(){
 			  $("#search_form").submit();

@@ -12,5 +12,7 @@ public interface ReplyService {
 	ModelContent getAll();
 	
 	ModelContent getNew();
+	
+	boolean checkCommentAuthor(long comment,long author);
 
 }

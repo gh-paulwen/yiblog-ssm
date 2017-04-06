@@ -51,8 +51,8 @@ public class MemcachedPassageUtil implements ICachePassageUtil{
 	}
 	
 	@Override
-	public Passage get(String id){
-		return mu.get(id, Passage.class);
+	public Passage get(long id){
+		return mu.get(Passage.REDIS_PREFIX + id, Passage.class);
 	}
 	
 	@Override

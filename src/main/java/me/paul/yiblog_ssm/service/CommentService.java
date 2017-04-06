@@ -9,6 +9,10 @@ public interface CommentService {
 	
 	ModelContent getAll();
 	
-	ModelContent getNew();
+	ModelContent getNew(long author);
+	
+	ModelContent read(long comment);
+	
+	boolean checkCommentAuthor(long comment,long author);
 
 }

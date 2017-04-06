@@ -5,8 +5,10 @@ import java.util.List;
 
 import me.paul.yiblog_ssm.dto.ModelContent;
 import me.paul.yiblog_ssm.entity.Comment;
+import me.paul.yiblog_ssm.entity.Passage;
 import me.paul.yiblog_ssm.entity.Reply;
 import me.paul.yiblog_ssm.mapper.CommentMapper;
+import me.paul.yiblog_ssm.mapper.PassageMapper;
 import me.paul.yiblog_ssm.mapper.ReplyMapper;
 import me.paul.yiblog_ssm.service.ReplyService;
 
@@ -18,8 +20,12 @@ public class ReplyServiceImpl implements ReplyService{
 	
 	@Autowired
 	private ReplyMapper replyMapper;
+	
 	@Autowired
 	private CommentMapper commentMapper;
+	
+	@Autowired
+	private PassageMapper passageMapper;
 
 	@Override
 	public ModelContent save(Reply reply) throws UnsupportedEncodingException {
@@ -48,6 +54,12 @@ public class ReplyServiceImpl implements ReplyService{
 		List<Reply> list = replyMapper.getNew();
 		mc.save("listReply",list);
 		return mc;
+	}
+
+	@Override
+	public boolean checkCommentAuthor(long comment, long author) {
+		Passage passage = passageMapper.getByCommentAndAuthor(comment, author);
+		return passage!=null;
 	}
 
 }

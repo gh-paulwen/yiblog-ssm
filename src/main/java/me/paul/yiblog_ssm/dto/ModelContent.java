@@ -9,7 +9,15 @@ import org.springframework.ui.Model;
 
 public class ModelContent {
 	
-	Map<String,Object> subjects = new HashMap<>();
+	private String destination;
+	
+	public ModelContent(){}
+	
+	public ModelContent(String destination){
+		this.destination = destination;
+	}
+	
+	private Map<String,Object> subjects = new HashMap<>();
 	
 	public void save(String key,Object value){
 		subjects.put(key, value);
@@ -36,6 +44,14 @@ public class ModelContent {
 		for(Entry<String,Object> entry : set){
 			model.addAttribute(entry.getKey(),entry.getValue());
 		}
+	}
+	
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	
+	public String getDestination() {
+		return destination;
 	}
 
 }

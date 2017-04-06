@@ -72,5 +72,17 @@ public class MemcachedUtil implements ICacheUtil{
 	public void flush(){
 		mmc.flush();
 	}
+
+	@Override
+	public void save(String key, Object obj, int exp) {
+		String value = gson.toJson(obj);
+		mmc.add(key, exp,value);
+	}
+
+	@Override
+	public void set(String key, Object obj, int exp) {
+		String value = gson.toJson(obj);
+		mmc.set(key, exp, value);
+	}
 	
 }

@@ -27,8 +27,8 @@ public class NoCachePassageUtil implements ICachePassageUtil{
 
 	
 	@Override
-	public Passage get(String key) {
-		return pm.getById(Long.parseLong(key));
+	public Passage get(long key) {
+		return pm.getById(key);
 	}
 
 	@Override

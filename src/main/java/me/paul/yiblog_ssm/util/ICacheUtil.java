@@ -7,7 +7,11 @@ public interface ICacheUtil {
 	
 	void save(String key,Object obj);
 	
+	void save(String key,Object obj,int exp);
+	
 	void set(String key,Object obj);
+	
+	void set(String key,Object obj,int exp);
 	
 	<T> T get(String key,Class<T> c);
 	

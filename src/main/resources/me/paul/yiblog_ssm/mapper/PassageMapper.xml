@@ -43,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result column="passage.writetime" property="writetime" javaType="java.util.Date"/>
     <result column="passage.content" property="content"/>
     <result column="passage.outline" property="outline"/>
+    <result column="passage.available" property="available"></result>
     <association property="author" javaType="User" resultMap="userMap"/>
     <association property="category" javaType="Category" resultMap="categoryMap"/>
     <association property="subCategory" javaType="SubCategory" resultMap="subCategoryMap"/>
@@ -56,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       passage.writetime as `passage.writetime`,
       passage.content as `passage.content`,
       passage.outline as `passage.outline`,
+      passage.available as `passage.available`,
       user.id as `user.id`,
       user.name as `user.name`,
       user.phonenumber as `user.phonenumber`,
@@ -95,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       from passage,user,subCategory
       where passage.author=user.id and
       passage.subCategory=subCategory.id
+      and passage.available=1
   </sql>
   
   <select id="getById" parameterType="long" resultMap="passageMap">
@@ -113,11 +116,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   
   <select id="categoryPageIds" resultType="Long">
-    select id from passage where subCategory=#{0} order by writetime desc limit #{1},#{2}
+    select id from passage where subCategory=#{0} and available=1 order by writetime desc limit #{1},#{2}
   </select>
   
   <select id="pageIds" resultType="Long">
-    select id from passage order by writetime desc limit #{0},#{1}
+    select id from passage where available=1 order by writetime desc limit #{0},#{1}
   </select>
   
   <select id="passageCount" resultType="int">
@@ -133,8 +136,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     and (passage.title like #{0} or passage.content like #{0}) 
   </select>
   
-  <select id="getBasic" resultType="Passage">
-    select id,title from passage
+  <select id="getBasicAll" resultType="Passage">
+    select id,title,available from passage 
+  </select>
+  
+  <select id="getBasic" resultType="Passage" parameterType="long">
+    select id,title,available from passage where author=#{0}
+  </select>
+  
+  <select id="getByIdAndAuthor" resultType="Passage" parameterType="long">
+    select id,title from passage where id=#{0} and author=#{1}
+  </select>
+  
+  <select id="getByCommentAndAuthor" resultType="Passage" parameterType="long">
+    select id,title from passage where author=#{1} and id=(select passage from comment where id=#{0})
   </select>
   
   <select id="getAll" resultMap="passageMap">
@@ -143,11 +158,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Passage">
     insert into passage (title,author,outline,category,subCategory,content,writetime)
-    values (#{title},#{author.id},#{outline},#{category.id},#{subCategory.id},#{content},now())
+    values (#{title},#{author.id},#{outline},#{category.id},#{subCategory.id},#{content},#{writetime})
   </insert>
   
   <update id="update" parameterType="Passage">
-    update passage set title=#{title},outline=#{outline},content=#{content},subCategory=#{subCategory.id},category=#{category.id} where id=#{id}
+    update passage set title=#{title},outline=#{outline},content=#{content},subCategory=#{subCategory.id},category=#{category.id},available=#{available} where id=#{id}
   </update>
   
 </mapper>

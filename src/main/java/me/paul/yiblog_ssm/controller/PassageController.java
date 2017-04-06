@@ -2,8 +2,11 @@ package me.paul.yiblog_ssm.controller;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.http.HttpSession;
+
 import me.paul.yiblog_ssm.dto.ModelContent;
 import me.paul.yiblog_ssm.entity.Passage;
+import me.paul.yiblog_ssm.entity.User;
 import me.paul.yiblog_ssm.service.PassageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +41,24 @@ public class PassageController {
 		}
 		ModelContent mc = passageService.get(id);
 		mc.fillInModel(model);
-		return "post";
+		return mc.getDestination();
 	}
 
 	@RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
-	public String editPassage(@PathVariable("id") long id, Model model) {
+	public String editPassage(@PathVariable("id") long id, Model model,HttpSession session) {
 		if (id < 0) {
 			return "error";
+		}
+		User user = (User) session.getAttribute("currentUser");
+		if(user == null){
+			model.addAttribute("message", "操作未定义");
+			return "message";
+		}
+		//true 为可以修改
+		boolean res = passageService.checkIdAuthor(id, user.getId());
+		if(!res){
+			model.addAttribute("message", "操作未定义");
+			return "message";
 		}
 		Passage passage = passageService.onlyPassage(id);
 		model.addAttribute("passage", passage);
@@ -53,13 +67,37 @@ public class PassageController {
 	}
 
 	@RequestMapping(path = "/submitEdit", method = RequestMethod.POST)
-	public synchronized String submitEdit(@ModelAttribute("passage") Passage passage,@RequestParam("before") long before,
-			Model model) {
+	public synchronized String submitEdit(@ModelAttribute("passage") Passage passage,@RequestParam("before") long before,Model model,HttpSession session) {
+		User user = (User) session.getAttribute("currentUser");
+		if(user == null){
+			model.addAttribute("message", "操作未定义");
+			return "message";
+		}
+		//true 为可以修改
+		boolean res = passageService.checkIdAuthor(passage.getId(), user.getId());
+		if(!res){
+			model.addAttribute("message", "操作未定义");
+			return "message";
+		}
 		ModelContent mc = passageService.edit(passage, before);
 		mc.fillInModel(model);
 		return "redirect:/operation";
 	}
-
+	
+	@RequestMapping(path="/devailable",method=RequestMethod.GET)
+	public String devailable(@RequestParam("passage")long passage,Model model){
+		ModelContent mc = passageService.devailable(passage);
+		mc.fillInModel(model);
+		return mc.getDestination();
+	}
+	
+	@RequestMapping(path="/available",method=RequestMethod.GET)
+	public String available(@RequestParam("passage") long passage,Model model){
+		ModelContent mc = passageService.available(passage);
+		mc.fillInModel(model);
+		return mc.getDestination();
+	} 
+	
 	@RequestMapping(path = "/save", method = RequestMethod.GET)
 	public String save(Model model) {
 		model.addAttribute("passage", new Passage());
@@ -67,9 +105,9 @@ public class PassageController {
 	}
 
 	@RequestMapping(path = "/submitSave", method = RequestMethod.POST)
-	public String submitSave(@ModelAttribute("passage") Passage passage,
-			Model model) {
-		ModelContent mc = passageService.save(passage);
+	public String submitSave(@ModelAttribute("passage") Passage passage,Model model,HttpSession session) {
+		User user = (User) session.getAttribute("currentUser");
+		ModelContent mc = passageService.save(passage,user);
 		mc.fillInModel(model);
 		return "message";
 	}

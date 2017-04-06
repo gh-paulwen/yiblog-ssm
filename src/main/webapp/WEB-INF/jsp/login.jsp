@@ -1,29 +1,144 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sp" uri="http://www.springframework.org/tags" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login</title>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>登录-XXXX</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
+<link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
 </head>
 <body>
-${message }
-<form:form action="${pageContext.request.contextPath }/submitLogin" modelAttribute="user">
-  <table >
-    <tr>
-      <td><form:label path="name">Username</form:label></td>
-      <td><form:input path="name"/></td>
-    </tr>
-    <tr>
-      <td><form:label path="password">Password</form:label></td>
-      <td><form:password path="password"/></td>
-    </tr>
-    <tr>
-      <td colspan="2"><input type="submit" value="Submit"></td>
-    </tr>
-  </table>
-</form:form>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand"
+					href="${pageContext.request.contextPath }/index">XXXX</a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="${pageContext.request.contextPath }/about" class="active">关于</a></li>
+					<li><a href="${pageContext.request.contextPath }/feedback/save">反馈</a></li>
+					<li><a href="${pageContext.request.contextPath }/link/save">申请友链</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+                    <li><a href="${pageContext.request.contextPath }/operation">操作中心</a></li>
+                </ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+			   <h4>登录</h4>
+			   <h4>${message }</h4>
+			   <form id="form_login" action="${pageContext.request.contextPath }/submitLogin" method="POST" style="width:50%">
+			       <input name="target" type="hidden" value="${target }">
+			       <h5></h5>
+			       <input name="name" type="text" class="form-control" placeholder="用户名或邮箱">
+			       <h5></h5>
+                   <input name="password" type="password" class="form-control" placeholder="密码">
+                   <h5></h5>
+                   <button id="btn_login" type="button" class="btn btn-default">登录</button>
+                   <a href="${pageContext.request.contextPath }/page/register" class="btn btn-default">注册</a>
+                   <a href="${pageContext.request.contextPath }/page/forget" class="btn btn-default">忘记密码</a>
+			   </form>
+			</div>
+			<div class="col-md-4">
+			    <div class="well">
+				<div class="well">
+					<h4>搜索</h4>
+					<form id="search_form" action="${pageContext.request.contextPath }/passage/search" method="get">
+					<div class="input-group">
+						<input name="content" type="text" class="form-control" >
+						<span class="input-group-btn">
+						<button id="btn_submit" class="btn btn-default" type="button">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+						</span>
+					</div>
+					</form>
+				</div>
+				<div class="well">
+					<h4>文章分类</h4>
+					<div class="row">
+						<div class="col-lg-6">
+							<ul class="list-unstyled">
+								<c:forEach items="${requestScope.listSubCategory }"
+									var="subCategory" begin="0" end="${requestScope.halfOfCates}">
+									<li><a href="${pageContext.request.contextPath }/passage/page/${subCategory.id}/1">${subCategory.name }</a>&nbsp;(${subCategory.passageCount })</li>
+								</c:forEach>
+							</ul>
+						</div>
+						<div class="col-lg-6">
+							<ul class="list-unstyled">
+								<c:forEach items="${requestScope.listSubCategory }"
+									var="subCategory" begin="${requestScope.halfOfCates + 1}">
+									<li><a href="${pageContext.request.contextPath }/passage/page/${subCategory.id}/1">${subCategory.name }</a>&nbsp;(${subCategory.passageCount })</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="well">
+				  <h4>推荐网站</h4>
+				  <h4></h4>
+				  <c:forEach items="${listLink}" var="link">
+				    <h4><a target="_blank" href="${link.url }"><c:out value="${link.name }"/></a></h4>
+				  </c:forEach>
+				</div>
+				
+				<div class="well">
+					<h4>${build.content } : <fmt:formatDate value="${build.time }" pattern="yyyy年MM月dd日"/></h4>
+					<h4>${lastUpdate.content } : <fmt:formatDate value="${lastUpdate.time }" pattern="yyyy年MM月dd日"/></h4>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<footer>
+			<div class="row">
+				<div class="col-lg-12">
+					<p>Copyright &copy; WJY的笔记本</p>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+
+	<script src="${pageContext.request.contextPath }/js/jquery.js"></script>
+	<script	src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	  $(document).ready(function(){
+		  $("#btn_submit").click(function(){
+			  $("#search_form").submit();
+		  });
+	  });
+	  $(document).ready(function(){
+		  $("#btn_login").click(function(){
+			  $("#form_login").submit();
+		  });
+	  });
+	</script>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260575777'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260575777%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+
 </body>
+
 </html>

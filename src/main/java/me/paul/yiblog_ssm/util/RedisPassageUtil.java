@@ -51,8 +51,8 @@ public final class RedisPassageUtil implements ICachePassageUtil{
 	}
 	
 	@Override
-	public Passage get(String id){
-		return ru.get(id, Passage.class);
+	public Passage get(long id){
+		return ru.get(Passage.REDIS_PREFIX + id, Passage.class);
 	}
 	
 	@Override

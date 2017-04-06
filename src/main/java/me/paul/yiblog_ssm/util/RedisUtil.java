@@ -102,4 +102,14 @@ public class RedisUtil implements ICacheUtil{
 		return jedis;
 	}
 
+	@Override
+	public void save(String key, Object obj, int exp) {
+		
+	}
+
+	@Override
+	public void set(String key, Object obj, int exp) {
+		
+	}
+
 }

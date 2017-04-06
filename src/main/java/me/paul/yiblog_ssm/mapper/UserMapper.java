@@ -11,5 +11,11 @@ public interface UserMapper {
 	User getByEmail(String email);
 	
 	List<User> getAll();
+	
+	void insert(User user);
+	
+	void update(User user);
+	
+	String getAuthorNameByPassage(long passage);
 
 }

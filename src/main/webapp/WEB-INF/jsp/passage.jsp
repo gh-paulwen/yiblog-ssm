@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>添加文章-WJY的笔记本</title>
+<title>添加文章-XXXX</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css"	rel="stylesheet">
 <link href="http://libs.baidu.com/fontawesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -25,10 +25,8 @@
 
 </head>
 <body>
-	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
@@ -36,10 +34,8 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand"
-					href="${pageContext.request.contextPath }/index">WJY的笔记本</a>
+				<a class="navbar-brand"	href="${pageContext.request.contextPath }/index">XXXX</a>
 			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
@@ -47,15 +43,14 @@
 					<li><a href="${pageContext.request.contextPath }/feedback/save">反馈</a></li>
 					<li><a href="${pageContext.request.contextPath }/link/save">申请友链</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+                    <li><a href="${pageContext.request.contextPath }/operation">操作中心</a></li>
+                </ul>
 			</div>
-			<!-- /.navbar-collapse -->
 		</div>
-		<!-- /.container -->
 	</nav>
-	<!-- Page Content -->
 	<div class="container">
 		<div class="row">
-			<!-- Blog Post Content Column -->
 			<div class="col-md-8">
 				<form:form action="${pageContext.request.contextPath }/passage/submitSave" method="POST" modelAttribute="passage">
                    <div class="form-group">
@@ -84,9 +79,7 @@
 						</span>
 					</div>
 					</form>
-					<!-- /.input-group -->
 				</div>
-				<!-- Blog Categories Well -->
 				<div class="well">
 					<h4>文章分类</h4>
 					<div class="row">
@@ -98,7 +91,6 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
 								<c:forEach items="${requestScope.listSubCategory }"
@@ -107,9 +99,7 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 					</div>
-					<!-- /.row -->
 				</div>
 				</div>
 				
@@ -134,11 +124,9 @@
 					<p>Copyright &copy; WJY的笔记本</p>
 				</div>
 			</div>
-			<!-- /.row -->
 		</footer>
 
 	</div>
-	<!-- /.container -->
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.js"></script>

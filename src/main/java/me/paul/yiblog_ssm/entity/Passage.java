@@ -26,6 +26,16 @@ public class Passage {
 	
 	private String outline;
 	
+	private int available;
+	
+	public int getAvailable() {
+		return available;
+	}
+	
+	public void setAvailable(int available) {
+		this.available = available;
+	}
+	
 	public String getOutline() {
 		return outline;
 	}

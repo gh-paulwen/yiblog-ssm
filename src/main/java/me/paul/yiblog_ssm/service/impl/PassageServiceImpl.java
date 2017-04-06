@@ -54,16 +54,22 @@ public class PassageServiceImpl implements PassageService{
 
 	@Override
 	public ModelContent get(long id) {
-		ModelContent mc = new ModelContent();
+		ModelContent mc = new ModelContent("post");
 		Passage passage = null;
-		passage = icpu.get(Passage.REDIS_PREFIX + id);
-			
+		passage = icpu.get(id);
 		if(passage == null){
 			passage = passageMapper.getById(id);
 		}
-		
-		if (passage == null) {return mc;}
-		
+		if (passage == null) {
+			mc.save("message", "获取失败");
+			mc.setDestination("message");
+			return mc;
+		}
+		if(passage.getAvailable() == 0){
+			mc.save("message", "获取失败");
+			mc.setDestination("message");
+			return mc;
+		}
 		List<Comment> listComment = commentMapper.getByPassage(passage.getId());
 		Map<Comment, Reply> mapCommentReply = new HashMap<Comment, Reply>();
 		for (Comment c : listComment) {
@@ -103,7 +109,7 @@ public class PassageServiceImpl implements PassageService{
 
 	@Transactional
 	@Override
-	public ModelContent save(Passage passage) {
+	public ModelContent save(Passage passage,User author) {
 		ModelContent mc = new ModelContent();
 		synchronized (this) {
 			SubCategory subCategory = subCategoryMapper.getById(passage
@@ -115,9 +121,8 @@ public class PassageServiceImpl implements PassageService{
 			lastUpdate.setTime(new Date());
 			category.setPassageCount(category.getPassageCount() + 1);
 			passage.setCategory(category);
-			User user = new User();
-			user.setId(1l);
-			passage.setAuthor(user);
+			passage.setAuthor(author);
+			passage.setWritetime(new Date());
 			passageMapper.insert(passage);
 			announcementMapper.update(lastUpdate);
 			subCategoryMapper.update(subCategory);
@@ -181,10 +186,57 @@ public class PassageServiceImpl implements PassageService{
 		return mc;
 	}
 
-	@Deprecated
 	@Override
 	public Passage onlyPassage(long id) {
-		return icpu.get(Passage.REDIS_PREFIX + id);
+		return icpu.get(id);
+	}
+
+	@Override
+	public boolean checkIdAuthor(long id, long author) {
+		Passage passage = passageMapper.getByIdAndAuthor(id, author);
+		return passage != null;
+	}
+
+	@Transactional
+	@Override
+	public synchronized ModelContent devailable(long id) {
+		ModelContent mc = new ModelContent("message");
+		Passage passage = passageMapper.getById(id);
+		if(passage == null || passage.getAvailable() == 0){
+			mc.save("message", "修改出错");
+			return mc;
+		}
+		passage.setAvailable(0);
+		Category category = passage.getCategory();
+		SubCategory subCategory = passage.getSubCategory();
+		category.setPassageCount(category.getPassageCount() - 1);
+		subCategory.setPassageCount(subCategory.getPassageCount() - 1);
+		categoryMapper.update(category);
+		subCategoryMapper.update(subCategory);
+		passageMapper.update(passage);
+		mc.save("message", "修改成功");
+		return mc;
+	}
+
+	@Transactional
+	@Override
+	public synchronized ModelContent available(long id) {
+		ModelContent mc = new ModelContent("message");
+		Passage passage = passageMapper.getById(id);
+		if(passage == null || passage.getAvailable() == 1){
+			mc.save("message", "修改出错");
+			return mc;
+		}
+		passage.setAvailable(1);
+		Category category = passage.getCategory();
+		SubCategory subCategory = passage.getSubCategory();
+		category.setPassageCount(category.getPassageCount() + 1);
+		subCategory.setPassageCount(subCategory.getPassageCount() +1);
+		categoryMapper.update(category);
+		subCategoryMapper.update(subCategory);
+		passageMapper.update(passage);
+		mc.save("message", "修改成功");
+		return mc;
 	}
 
 }
