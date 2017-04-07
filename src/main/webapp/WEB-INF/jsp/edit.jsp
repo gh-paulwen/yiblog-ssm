@@ -56,6 +56,7 @@
 				<form:form action="${pageContext.request.contextPath }/passage/submitEdit" method="POST" modelAttribute="passage">
 				   <input type="hidden" name="before" value="${beforeModify }">
 				   <form:hidden path="id"/>
+				   <form:hidden path="available"/>
                    <div class="form-group">
                       <h4>修改文章</h4>
                       <form:select class="combobox" path="subCategory.id" items="${listSubCategory }" itemLabel="name" itemValue="id"/><h4></h4>
