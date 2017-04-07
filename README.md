@@ -11,7 +11,6 @@
 于2016-11-3用ssm重写
 
 change logs
-
 1.砍掉登录，注册
 2.让用户提交友链
 3.改善界面布局
@@ -19,6 +18,9 @@ change logs
 
 
 change logs 2017-03-24
-
 fixed wangEditor upload
-decoupled mysql redis memcached 
+decoupled mysql redis memcached
+
+change logs 2017-04-07
+fixed some bugs 
+

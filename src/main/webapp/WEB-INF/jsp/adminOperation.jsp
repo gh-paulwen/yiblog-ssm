@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>管理员操作中心-XXXX</title>
+<title>管理员操作中心-WJY的笔记本</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand"
-					href="${pageContext.request.contextPath }/index">XXXX</a>
+					href="${pageContext.request.contextPath }/index">WJY的笔记本</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -38,9 +38,6 @@
 					<li><a href="${pageContext.request.contextPath }/feedback/save">反馈</a></li>
 					<li><a href="${pageContext.request.contextPath }/link/save">申请友链</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-                    <li><a href="${pageContext.request.contextPath }/operation">操作中心</a></li>
-                </ul>
 			</div>
 		</div>
 	</nav>

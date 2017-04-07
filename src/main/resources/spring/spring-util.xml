@@ -22,7 +22,7 @@
     </bean>
 
     <bean name="inetAddress" class="java.net.InetSocketAddress">
-      <constructor-arg value="memcached_it"/>
+      <constructor-arg value="memcached"/>
       <constructor-arg value="11211"/>
     </bean>
     <bean name="memcachedClient" class="net.spy.memcached.MemcachedClient">

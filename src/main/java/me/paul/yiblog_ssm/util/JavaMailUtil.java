@@ -51,7 +51,7 @@ public class JavaMailUtil {
 		Message message = new MimeMessage(session);
 		try{
 			message.setHeader("Content-Type", "text/html;charset=utf-8");
-			message.setSubject("来自XXX的验证码");
+			message.setSubject("来自[WJY的笔记本]的验证码");
 			message.setFrom(new InternetAddress(account,accountName));
 			message.setRecipient(RecipientType.TO, new InternetAddress(email));
 			message.setText(content);
