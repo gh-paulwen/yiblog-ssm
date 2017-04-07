@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>添加文章-XXXX</title>
+<title>添加文章-FORUM</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css"	rel="stylesheet">
 <link href="http://libs.baidu.com/fontawesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -34,7 +34,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand"	href="${pageContext.request.contextPath }/index">XXXX</a>
+				<a class="navbar-brand"	href="${pageContext.request.contextPath }/index">FORUM</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -121,7 +121,7 @@
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; WJY的笔记本</p>
+					<p>Copyright &copy; FORUM</p>
 				</div>
 			</div>
 		</footer>

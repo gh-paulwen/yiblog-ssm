@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>管理员操作中心-XXXX</title>
+<title>管理员操作中心-FORUM</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand"
-					href="${pageContext.request.contextPath }/index">XXXX</a>
+					href="${pageContext.request.contextPath }/index">FORUM</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -180,7 +180,6 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<!-- /.col-lg-6 -->
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
 								<c:forEach items="${requestScope.listSubCategory }"
@@ -211,7 +210,7 @@
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; WJY的笔记本</p>
+					<p>Copyright &copy; FORUM</p>
 				</div>
 			</div>
 		</footer>

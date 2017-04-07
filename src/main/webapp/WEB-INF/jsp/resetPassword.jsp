@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>重置密码-XXXX</title>
+<title>重置密码-FORUM</title>
 
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand"
-					href="${pageContext.request.contextPath }/index">XXXX</a>
+					href="${pageContext.request.contextPath }/index">FORUM</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -117,7 +117,7 @@
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; WJY的笔记本</p>
+					<p>Copyright &copy; FORUM</p>
 				</div>
 			</div>
 		</footer>

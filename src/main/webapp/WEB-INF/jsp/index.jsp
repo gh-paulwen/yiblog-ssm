@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>XXXX</title>
+<title>FORUM</title>
 
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${pageContext.request.contextPath }/index">XXXX</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath }/index">FORUM</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -48,7 +48,7 @@
 		<div class="row">
 			<div class="col-md-8">
 				<h1 class="page-header">
-				    try again , fail again , fail better
+				    Try again , Fail again , Fail better
 				</h1>
 				<c:if test="${hide==null }">
 				<ul class="pager">				
@@ -158,7 +158,7 @@
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; WJY的笔记本</p>
+					<p>Copyright &copy; FORUM</p>
 				</div>
 			</div>
 		</footer>

@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>消息-XXXX</title>
+<title>消息-FORUM</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath }/ico.jpg">
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/css/blog-post.css" rel="stylesheet">
@@ -27,7 +27,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${pageContext.request.contextPath }/index">XXXX</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath }/index">FORUM</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -103,7 +103,7 @@
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; WJY的笔记本</p>
+					<p>Copyright &copy; FORUM</p>
 				</div>
 			</div>
 		</footer>
@@ -121,20 +121,6 @@
 	  });
 	</script>
 	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260575777'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260575777%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-	<script>
-		(function(){
-			var bp = document.createElement('script');
-	    	var curProtocol = window.location.protocol.split(':')[0];
-	    	if (curProtocol === 'https') {
-	        	bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-	    	}
-	    	else {
-	        	bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-	    	}
-	    	var s = document.getElementsByTagName("script")[0];
-	    	s.parentNode.insertBefore(bp, s);
-		})();
-	</script>
 </body>
 
 </html>
