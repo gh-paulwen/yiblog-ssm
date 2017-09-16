@@ -19,9 +19,9 @@ import me.paul.yiblog_ssm.mapper.FeedbackMapper;
 import me.paul.yiblog_ssm.mapper.LinkMapper;
 import me.paul.yiblog_ssm.mapper.PassageMapper;
 import me.paul.yiblog_ssm.mapper.UserMapper;
-import me.paul.yiblog_ssm.util.ICachePassageUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,100 +30,88 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class CommonController {
-	
-	@Autowired
-	private ICachePassageUtil icpu;
-	
-	@Autowired
-	private PassageMapper passageMapper;
-	
-	@Autowired
-	private UserMapper userMapper;
-	
-	@Autowired
-	private CategoryMapper categoryMapper;
 
-	@Autowired
-	private CommentMapper commentMapper;
+    @Autowired
+    private PassageMapper passageMapper;
 
-	@Autowired
-	private LinkMapper linkMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-	@Autowired
-	private FeedbackMapper feedbackMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
-	private int passagePerPage;
+    @Autowired
+    private CommentMapper commentMapper;
 
-	public void setPassagePerPage(int passagePerPage) {
-		this.passagePerPage = passagePerPage;
-	}
-	
-	@RequestMapping(path = "/index", method = RequestMethod.GET)
-	public String index(Model model) {
-		List<Passage> listPassage = Collections.emptyList(); 
-		listPassage = icpu.simpleList(1, passagePerPage);
-		model.addAttribute("listPassage", listPassage);
-		int totalPassageCount = passageMapper.passageCount();
-		if (totalPassageCount <= passagePerPage * 1) {
-			model.addAttribute("nextPage", 1);
-		} else {
-			model.addAttribute("nextPage", 2);
-		}
-		model.addAttribute("lastPage", 1);
-		return "index";
-	}
+    @Autowired
+    private LinkMapper linkMapper;
 
-	@RequestMapping(path = "/page/{page}", method = RequestMethod.GET)
-	public String page(@PathVariable("page") String page) {
-		return page;
-	}
-	
-	@RequestMapping(path="/about",method=RequestMethod.GET)
-	public String about(){
-		return "about";
-	}
+    @Autowired
+    private FeedbackMapper feedbackMapper;
 
-	@RequestMapping(path = "/cates", method = RequestMethod.GET)
-	public String cates(Model model) {
-		List<Category> listCategory = categoryMapper.getAll();
-		model.addAttribute("listCategory", listCategory);
-		model.addAttribute("category", new Category());
-		model.addAttribute("subCategory", new SubCategory());
-		return "cates";
-	}
+    @Value("8")
+    private int passagePerPage;
 
-	@RequestMapping(path = "/operation", method = RequestMethod.GET)
-	public String operation(HttpSession session,Model model) {
-		User user = (User) session.getAttribute("currentUser");
-		List<Comment> listComment = commentMapper.getNew(user.getId());
-		List<Passage> listPassage = passageMapper.getBasic(user.getId());
-		model.addAttribute("listComment", listComment);
-		model.addAttribute("listPassage", listPassage);
-		return "operation";
-	}
-	
-	@RequestMapping(path="/adminOperation",method=RequestMethod.GET)
-	public String adminOperation(Model model){
-		List<Feedback> listFeedback = feedbackMapper.getAll();
-		List<Link> listLink = linkMapper.getAll();
-		List<Passage> listPassage = passageMapper.getBasicAll();
-		List<User> listUser = userMapper.getAll();
-		model.addAttribute("listFeedback", listFeedback);
-		model.addAttribute("listLink", listLink);
-		model.addAttribute("listPassage", listPassage);
-		model.addAttribute("listUser", listUser);
-		return "adminOperation";
-	}
-	
-	@RequestMapping(path="/message",method=RequestMethod.GET)
-	public String message(){
-		return "message";
-	}
-	
-	@PostConstruct
-	public void postConstruct(){
-		icpu.flush();
-		List<Passage> list = passageMapper.getAll();
-		icpu.batchSave(list);
-	}
+    @RequestMapping(path = "/index", method = RequestMethod.GET)
+    public String index(Model model) {
+        List<Passage> listPassage = Collections.emptyList();
+        listPassage = passageMapper.page(0, passagePerPage);
+        model.addAttribute("listPassage", listPassage);
+        int totalPassageCount = passageMapper.passageCount();
+        if (totalPassageCount <= passagePerPage) {
+            model.addAttribute("nextPage", 1);
+        } else {
+            model.addAttribute("nextPage", 2);
+        }
+        model.addAttribute("lastPage", 1);
+        return "index";
+    }
+
+    @RequestMapping(path = "/page/{page}", method = RequestMethod.GET)
+    public String page(@PathVariable("page") String page) {
+        return page;
+    }
+
+    @RequestMapping(path = "/about", method = RequestMethod.GET)
+    public String about() {
+        return "about";
+    }
+
+    @RequestMapping(path = "/cates", method = RequestMethod.GET)
+    public String cates(Model model) {
+        List<Category> listCategory = categoryMapper.getAll();
+        model.addAttribute("listCategory", listCategory);
+        model.addAttribute("category", new Category());
+        model.addAttribute("subCategory", new SubCategory());
+        return "cates";
+    }
+
+    @RequestMapping(path = "/operation", method = RequestMethod.GET)
+    public String operation(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("currentUser");
+        List<Comment> listComment = commentMapper.getNew(user.getId());
+        List<Passage> listPassage = passageMapper.getBasic(user.getId());
+        model.addAttribute("listComment", listComment);
+        model.addAttribute("listPassage", listPassage);
+        return "operation";
+    }
+
+    @RequestMapping(path = "/adminOperation", method = RequestMethod.GET)
+    public String adminOperation(Model model) {
+        List<Feedback> listFeedback = feedbackMapper.getAll();
+        List<Link> listLink = linkMapper.getAll();
+        List<Passage> listPassage = passageMapper.getBasicAll();
+        List<User> listUser = userMapper.getAll();
+        model.addAttribute("listFeedback", listFeedback);
+        model.addAttribute("listLink", listLink);
+        model.addAttribute("listPassage", listPassage);
+        model.addAttribute("listUser", listUser);
+        return "adminOperation";
+    }
+
+    @RequestMapping(path = "/message", method = RequestMethod.GET)
+    public String message() {
+        return "message";
+    }
+
 }

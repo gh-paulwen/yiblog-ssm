@@ -6,8 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import me.paul.yiblog_ssm.entity.User;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+@Component
 public class UserInterceptor extends HandlerInterceptorAdapter{
 	
 	@Override

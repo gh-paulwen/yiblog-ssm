@@ -10,6 +10,7 @@ import me.paul.yiblog_ssm.entity.User;
 import me.paul.yiblog_ssm.service.PassageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,12 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(path = "/passage")
 public class PassageController {
 
+    @Value("8")
 	private int passagePerPage ;
 
-	public void setPassagePerPage(int passagePerPage) {
-		this.passagePerPage = passagePerPage;
-	}
-	
 	@Autowired
 	private PassageService passageService;
 
