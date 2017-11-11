@@ -1,6 +1,7 @@
 package me.paul.yiblog_ssm.config;
 
 import me.paul.yiblog_ssm.controller.interceptor.AdminInterceptor;
+import me.paul.yiblog_ssm.controller.interceptor.IndexInterceptor;
 import me.paul.yiblog_ssm.controller.interceptor.LoadInterceptor;
 import me.paul.yiblog_ssm.controller.interceptor.UserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private AdminInterceptor adminInterceptor;
 
+    @Autowired
+    private IndexInterceptor indexInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(indexInterceptor).addPathPatterns("/");
         registry.addInterceptor(loadInterceptor);
         registry.addInterceptor(adminInterceptor)
                 .addPathPatterns("/cates")

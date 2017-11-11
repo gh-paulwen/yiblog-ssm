@@ -52,6 +52,11 @@ public class CommonController {
     @Value("8")
     private int passagePerPage;
 
+    @RequestMapping(path="/",method = RequestMethod.GET)
+    public String welcome(){
+        return "forward:/index";
+    }
+
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         List<Passage> listPassage = Collections.emptyList();
